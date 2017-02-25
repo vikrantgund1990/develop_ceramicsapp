@@ -3,4 +3,12 @@
     <string name="no_internet">No Internet Connection !</string>
     <string name="generic_server_down">Generic Server Down....</string>
     <string name="generic_error">Generic Error....</string>
+
+    <string name="kitchen_tile">Kitchen Tiles</string>
+    <string name="bathroom_tile">Bathroom Tiles</string>
+    <string name="livingroom_tile">Living Room Tiles</string>
+    <string name="bedroom_tile">Bedroom Tiles</string>
+    <string name="office_tile">Office Tiles</string>
+    <string name="outdoor_tile">Outdoor Tiles</string>
+
 </resources>
