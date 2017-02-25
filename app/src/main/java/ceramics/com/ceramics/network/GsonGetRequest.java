@@ -27,8 +27,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import demo.loylty.com.goalsapp.utils.AppConstants;
-
+import ceramics.com.ceramics.utils.AppConstants;
 
 /**
  * Volley adapter for JSON requests that will be parsed into Java objects by

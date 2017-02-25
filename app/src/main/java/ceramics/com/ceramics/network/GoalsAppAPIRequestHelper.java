@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 
-import demo.loylty.com.goalsapp.utils.GoalsAppApplication;
+import ceramics.com.ceramics.utils.CeramicsApplication;
 
 
 /**
@@ -47,7 +47,7 @@ public class GoalsAppAPIRequestHelper {
 		GsonGetRequest<T> mrequest = new GsonGetRequest<T>(BASE_URL
 				+ requestType, clazz, queryParams, null, listener,
 				errorListener, activity);
-		GoalsAppApplication.getInstance().addToRequestQueue(mrequest);
+		CeramicsApplication.getInstance().addToRequestQueue(mrequest);
 
 	}
 
@@ -67,7 +67,7 @@ public class GoalsAppAPIRequestHelper {
 				+ requestType, clazz, queryParams, listener, errorListener,
 				activity);
 
-		GoalsAppApplication.getInstance().addToRequestQueue(mrequest);
+		CeramicsApplication.getInstance().addToRequestQueue(mrequest);
 
 	}
 
@@ -88,7 +88,7 @@ public class GoalsAppAPIRequestHelper {
 				+ requestType, clazz, queryParams, listener, errorListener,
 				activity);
 
-		GoalsAppApplication.getInstance().addToRequestQueue(mrequest);
+		CeramicsApplication.getInstance().addToRequestQueue(mrequest);
 
 	}
 
@@ -114,7 +114,7 @@ public class GoalsAppAPIRequestHelper {
 
 		GsonPostRequest<T> mrequest = new GsonPostRequest<T>(url, clazz,
 				queryParams, listener, errListener);
-		GoalsAppApplication.getInstance().addToRequestQueue(mrequest);
+		CeramicsApplication.getInstance().addToRequestQueue(mrequest);
 
 	}
 
