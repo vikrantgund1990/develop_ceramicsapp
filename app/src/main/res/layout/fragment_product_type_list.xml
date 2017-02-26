@@ -13,6 +13,7 @@
             android:orientation="vertical"
             >
             <FrameLayout
+                android:id="@+id/kitchen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -40,6 +41,7 @@
                 </LinearLayout>
             </FrameLayout>
             <FrameLayout
+                android:id="@+id/bathroom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
@@ -69,6 +71,7 @@
                 </LinearLayout>
             </FrameLayout>
             <FrameLayout
+                android:id="@+id/living_room"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
@@ -98,6 +101,7 @@
                 </LinearLayout>
             </FrameLayout>
             <FrameLayout
+                android:id="@+id/bedroom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
@@ -127,6 +131,7 @@
                 </LinearLayout>
             </FrameLayout>
             <FrameLayout
+                android:id="@+id/office"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"
@@ -156,6 +161,7 @@
                 </LinearLayout>
             </FrameLayout>
             <FrameLayout
+                android:id="@+id/outdoor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ten_dp"

@@ -18,12 +18,9 @@ import ceramics.com.ceramics.utils.CeramicsApplication;
  * @author siddhantp
  * 
  */
-public class GoalsAppAPIRequestHelper {
-	/******Live Url*****/
-	//public static final String BASE_URL = "https://merchant.maxgetmore.com:8443";
+public class APIRequestHelper {
 
-//**	*//**//******QA Url*****//**//*
-	public static final String BASE_URL = "http://workoutcashamarketing.in:8080/api";
+	public static final String BASE_URL = "http://qa.ceramicskart.com/api";
 
 	public static String requestType;
 	public static Type clazz;
@@ -37,13 +34,13 @@ public class GoalsAppAPIRequestHelper {
 										   JSONObject queryParams, Listener<T> listener,
 										   ErrorListener errorListener, Activity activity) {
 
-		GoalsAppAPIRequestHelper.requestType = requestType;
-		GoalsAppAPIRequestHelper.clazz = clazz;
-		GoalsAppAPIRequestHelper.queryParams = queryParams;
-		GoalsAppAPIRequestHelper.listener = listener;
-		GoalsAppAPIRequestHelper.errorListener = errorListener;
-		GoalsAppAPIRequestHelper.activity = activity;
-		GoalsAppAPIRequestHelper.RequestType = Request.Method.GET;
+		APIRequestHelper.requestType = requestType;
+		APIRequestHelper.clazz = clazz;
+		APIRequestHelper.queryParams = queryParams;
+		APIRequestHelper.listener = listener;
+		APIRequestHelper.errorListener = errorListener;
+		APIRequestHelper.activity = activity;
+		APIRequestHelper.RequestType = Request.Method.GET;
 		GsonGetRequest<T> mrequest = new GsonGetRequest<T>(BASE_URL
 				+ requestType, clazz, queryParams, null, listener,
 				errorListener, activity);
@@ -55,13 +52,13 @@ public class GoalsAppAPIRequestHelper {
 											JSONObject queryParams, Listener<T> listener,
 											ErrorListener errorListener, Activity activity) {
 
-		GoalsAppAPIRequestHelper.requestType = requestType;
-		GoalsAppAPIRequestHelper.clazz = clazz;
-		GoalsAppAPIRequestHelper.queryParams = queryParams;
-		GoalsAppAPIRequestHelper.listener = listener;
-		GoalsAppAPIRequestHelper.errorListener = errorListener;
-		GoalsAppAPIRequestHelper.activity = activity;
-		GoalsAppAPIRequestHelper.RequestType = Request.Method.POST;
+		APIRequestHelper.requestType = requestType;
+		APIRequestHelper.clazz = clazz;
+		APIRequestHelper.queryParams = queryParams;
+		APIRequestHelper.listener = listener;
+		APIRequestHelper.errorListener = errorListener;
+		APIRequestHelper.activity = activity;
+		APIRequestHelper.RequestType = Request.Method.POST;
 		Log.e("KK", "\n" + queryParams.toString());
 		GsonPostRequest<T> mrequest = new GsonPostRequest<T>(BASE_URL
 				+ requestType, clazz, queryParams, listener, errorListener,
@@ -76,13 +73,13 @@ public class GoalsAppAPIRequestHelper {
 										   JSONObject queryParams, Listener<T> listener,
 										   ErrorListener errorListener, Activity activity) {
 
-		GoalsAppAPIRequestHelper.requestType = requestType;
-		GoalsAppAPIRequestHelper.clazz = clazz;
-		GoalsAppAPIRequestHelper.queryParams = queryParams;
-		GoalsAppAPIRequestHelper.listener = listener;
-		GoalsAppAPIRequestHelper.errorListener = errorListener;
-		GoalsAppAPIRequestHelper.activity = activity;
-		GoalsAppAPIRequestHelper.RequestType = Request.Method.PUT;
+		APIRequestHelper.requestType = requestType;
+		APIRequestHelper.clazz = clazz;
+		APIRequestHelper.queryParams = queryParams;
+		APIRequestHelper.listener = listener;
+		APIRequestHelper.errorListener = errorListener;
+		APIRequestHelper.activity = activity;
+		APIRequestHelper.RequestType = Request.Method.PUT;
 		Log.e("KK", "\n" + queryParams.toString());
 		GsonPutRequest<T> mrequest = new GsonPutRequest<T>(BASE_URL
 				+ requestType, clazz, queryParams, listener, errorListener,
@@ -122,6 +119,37 @@ public class GoalsAppAPIRequestHelper {
 	/*************************************************************************************************/
 	/***************************** Common API Call **************************************************/
 	/*************************************************************************************************/
+
+
+	public static <T> void kitchen(Type clazz, JSONObject queryParams, Listener<T> listener,
+									   ErrorListener errorListener, Activity activity) {
+		userGetRequest("/Product/Category/Kitchen", clazz, queryParams, listener, errorListener, activity);
+	}
+
+	public static <T> void bathroom(Type clazz, JSONObject queryParams, Listener<T> listener,
+								   ErrorListener errorListener, Activity activity) {
+		userGetRequest("/Product/Category/Bathroom", clazz, queryParams, listener, errorListener, activity);
+	}
+
+	public static <T> void bedroom(Type clazz, JSONObject queryParams, Listener<T> listener,
+								   ErrorListener errorListener, Activity activity) {
+		userGetRequest("/Product/Category/Bedroom", clazz, queryParams, listener, errorListener, activity);
+	}
+
+	public static <T> void livingroom(Type clazz, JSONObject queryParams, Listener<T> listener,
+								   ErrorListener errorListener, Activity activity) {
+		userGetRequest("/Product/Category/livingroom", clazz, queryParams, listener, errorListener, activity);
+	}
+
+	public static <T> void office(Type clazz, JSONObject queryParams, Listener<T> listener,
+								   ErrorListener errorListener, Activity activity) {
+		userGetRequest("/Product/Category/office", clazz, queryParams, listener, errorListener, activity);
+	}
+
+	public static <T> void outdoor(Type clazz, JSONObject queryParams, Listener<T> listener,
+								   ErrorListener errorListener, Activity activity) {
+		userGetRequest("/Product/Category/outdoor", clazz, queryParams, listener, errorListener, activity);
+	}
 
 
 	public static <T> void getGoalList(Type clazz, JSONObject queryParams, Listener<T> listener,

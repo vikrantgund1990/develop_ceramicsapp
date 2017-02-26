@@ -14,7 +14,7 @@ public abstract class BaseActivity extends FragmentActivity {
 
     private Context activity;
 
-    protected void showToast(String message){
+    public void showToast(String message){
         activity = getApplicationContext();
         if (activity != null){
             Toast.makeText(activity,message,Toast.LENGTH_SHORT).show();

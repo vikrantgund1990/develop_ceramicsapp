@@ -5,10 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ceramics.com.ceramics.activity.HomeActivity">
+    <ceramics.com.ceramics.custom.CustomActionBar
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        >
 
+    </ceramics.com.ceramics.custom.CustomActionBar>
     <FrameLayout
         android:id="@+id/base_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar"
+        ></FrameLayout>
 
 </RelativeLayout>
