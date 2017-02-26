@@ -20,6 +20,7 @@ import ceramics.com.ceramics.activity.BaseActivity;
 import ceramics.com.ceramics.model.ProductDetails;
 import ceramics.com.ceramics.network.APIRequestHelper;
 import ceramics.com.ceramics.network.CommonJsonArrayModel;
+import ceramics.com.ceramics.utils.Utils;
 
 /**
  * Created by vikrantg on 25-02-2017.
@@ -61,25 +62,30 @@ public class ProductTypeListFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.kitchen:
-                getKitchen();
-                break;
-            case R.id.living_room:
-                getLivingRoom();
-                break;
-            case R.id.bathroom:
-                getBathroom();
-                break;
-            case R.id.bedroom:
-                getBedroom();
-                break;
-            case R.id.office:
-                getOffice();
-                break;
-            case R.id.outdoor:
-                getOutdoor();
-                break;
+        if (Utils.isNetworkConnected(activity)){
+            switch (v.getId()){
+                case R.id.kitchen:
+                    getKitchen();
+                    break;
+                case R.id.living_room:
+                    getLivingRoom();
+                    break;
+                case R.id.bathroom:
+                    getBathroom();
+                    break;
+                case R.id.bedroom:
+                    getBedroom();
+                    break;
+                case R.id.office:
+                    getOffice();
+                    break;
+                case R.id.outdoor:
+                    getOutdoor();
+                    break;
+            }
+        }
+        else {
+            activity.showToast(getString(R.string.no_internet));
         }
     }
 
@@ -170,7 +176,7 @@ public class ProductTypeListFragment extends BaseFragment implements View.OnClic
 
                     }
                     else {
-                        activity.showToast("Sorry! Products not found");
+                        activity.showToast(getString(R.string.product_not_available));
                     }
                 }
                 else {
