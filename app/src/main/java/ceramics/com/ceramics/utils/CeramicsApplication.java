@@ -6,10 +6,13 @@ import android.support.multidex.MultiDexApplication;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import ceramics.com.ceramics.network.BitmapLruCache;
 
 /**
  * Created by vikrantg on 22-06-2016.
@@ -20,6 +23,7 @@ public class CeramicsApplication extends MultiDexApplication {
     private RequestQueue mRequestQueue;
     private final Set<Request<?>> saveLastRequest = new HashSet<Request<?>>();
     private static CeramicsApplication mInstance;
+    private ImageLoader mImageLoader;
 
     public static synchronized CeramicsApplication getInstance() {
         return mInstance;
@@ -64,5 +68,14 @@ public class CeramicsApplication extends MultiDexApplication {
         }
 
         return mRequestQueue;
+    }
+
+    public ImageLoader getImageLoader() {
+        getRequestQueue();
+        if (mImageLoader == null) {
+            mImageLoader = new ImageLoader(this.mRequestQueue,
+                    new BitmapLruCache());
+        }
+        return this.mImageLoader;
     }
 }

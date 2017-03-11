@@ -123,7 +123,6 @@ public class GsonPostRequest<T> extends Request<T> {
 	@Override
 	public Map<String, String> getHeaders() throws AuthFailureError {
 		HashMap<String, String> headerMap = new HashMap<String , String >();
-		headerMap.put(AppConstants.KEY_ACCESS_TOKEN, AppConstants.ACCESS_TOKEN);
 		Log.e("KK","header "+headerMap.toString());
 		
 		return headerMap != null ? headerMap : super.getHeaders();

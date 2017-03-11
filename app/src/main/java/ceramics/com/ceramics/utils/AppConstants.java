@@ -5,7 +5,7 @@ package ceramics.com.ceramics.utils;
  */
 public class AppConstants {
 
-    public static final String ACCESS_TOKEN = "3cb751eb-b0ac-4ecb-90be-484046847663";
+    public static final String PRODUCT_DETAILS = "ProductDetails";
     public static final String KEY_ACCESS_TOKEN = "access_token";
     public static final String SUBSCRIBED = "SUBSCRIBED";
     public static final String UNSUBSCRIBED = "UNSUBSCRIBED";

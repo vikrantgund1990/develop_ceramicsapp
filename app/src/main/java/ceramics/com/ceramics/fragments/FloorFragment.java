@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.google.gson.reflect.TypeToken;
@@ -22,6 +23,7 @@ import ceramics.com.ceramics.helper.ProductListDataListner;
 import ceramics.com.ceramics.model.ProductDetails;
 import ceramics.com.ceramics.network.APIRequestHelper;
 import ceramics.com.ceramics.network.CommonJsonArrayModel;
+import ceramics.com.ceramics.utils.AppConstants;
 
 /**
  * Created by vikrantg on 11-03-2017.
@@ -56,6 +58,20 @@ public class FloorFragment extends BaseFragment implements ProductListDataListne
 
     private void initView(View view){
         gvProductList = (GridView)view.findViewById(R.id.grid_wall);
+        gvProductList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openProductDetailsFragment(productListGridAdapater.getItem(position));
+            }
+        });
+    }
+
+    private void openProductDetailsFragment(ProductDetails productDetails){
+        ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(AppConstants.PRODUCT_DETAILS,productDetails);
+        productDetailsFragment.setArguments(bundle);
+        activity.loadFragment(productDetailsFragment,R.id.base_layout,true);
     }
 
     private void setData(){
