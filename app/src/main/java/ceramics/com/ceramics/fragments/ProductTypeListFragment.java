@@ -44,6 +44,12 @@ public class ProductTypeListFragment extends BaseFragment implements View.OnClic
         initView(getView());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        activity.setActionBarTitle("Ceramics");
+    }
+
     private void initView(View view){
         flKitchen = (FrameLayout)view.findViewById(R.id.kitchen);
         flBathroom = (FrameLayout)view.findViewById(R.id.bathroom);

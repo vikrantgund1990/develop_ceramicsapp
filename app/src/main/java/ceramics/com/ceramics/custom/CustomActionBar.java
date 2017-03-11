@@ -19,8 +19,7 @@ public class CustomActionBar extends LinearLayout implements View.OnClickListene
 
     private Context context;
     private LayoutInflater inflater;
-    private ImageView ivActionBack;
-    private ImageView ivActionMenu;
+    private ImageView ivActionBack,ivActionMenu;
     private TextView tvTitle;
     private ActionBarListener actionBarListener;
 
@@ -42,7 +41,9 @@ public class CustomActionBar extends LinearLayout implements View.OnClickListene
         inflater.inflate(R.layout.layout_actionbar,this);
         ivActionBack = (ImageView) findViewById(R.id.image_back_action);
         tvTitle = (TextView)findViewById(R.id.text_action_title);
+        ivActionMenu = (ImageView)findViewById(R.id.image_menu_action);
         ivActionBack.setOnClickListener(this);
+        ivActionMenu.setOnClickListener(this);
     }
 
     public void setActionBarTitle(String title){
@@ -59,6 +60,9 @@ public class CustomActionBar extends LinearLayout implements View.OnClickListene
             case R.id.image_back_action:
                 onBackClick();
                 break;
+            case R.id.image_menu_action:
+                onMenuClick();
+                break;
 
         }
     }
@@ -66,6 +70,15 @@ public class CustomActionBar extends LinearLayout implements View.OnClickListene
     private void onBackClick(){
         if (actionBarListener != null){
             actionBarListener.onBackIconPressed();
+        }
+        else {
+            Toast.makeText(context,"Implement action bar listener in activity",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void onMenuClick(){
+        if (actionBarListener != null){
+            actionBarListener.onMenuIconPressed();
         }
         else {
             Toast.makeText(context,"Implement action bar listener in activity",Toast.LENGTH_SHORT).show();

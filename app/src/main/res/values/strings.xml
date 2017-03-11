@@ -12,5 +12,5 @@
     <string name="outdoor_tile">Outdoor Tiles</string>
 
     <string name="product_not_available">Sorry! Products not found.</string>
-
+    <string name="error">Sorry! Unable to process your request. Please try again later.</string>
 </resources>

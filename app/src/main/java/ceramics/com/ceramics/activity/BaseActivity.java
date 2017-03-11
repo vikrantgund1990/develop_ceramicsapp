@@ -21,11 +21,14 @@ public abstract class BaseActivity extends FragmentActivity {
         }
     }
 
-    public void loadFragment(Fragment fragment, int fragmentLayoutID){
+    public void loadFragment(Fragment fragment, int fragmentLayoutID,boolean isBackStack){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.addToBackStack(null);
+        if (isBackStack)
+            fragmentTransaction.addToBackStack(null);
         fragmentTransaction.replace(fragmentLayoutID, fragment);
         fragmentTransaction.commit();
     }
+
+    public abstract void setActionBarTitle(String title);
 }
 

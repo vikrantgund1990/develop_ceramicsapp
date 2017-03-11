@@ -10,12 +10,21 @@
         android:background="@color/app_color"
         >
         <ImageView
+            android:id="@+id/image_menu_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/menu_icon"
+            android:layout_centerVertical="true"
+            />
+        <ImageView
             android:id="@+id/image_back_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:src="@drawable/back_icon"
             android:layout_centerVertical="true"
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/text_action_title"

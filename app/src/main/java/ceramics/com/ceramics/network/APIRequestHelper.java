@@ -151,10 +151,14 @@ public class APIRequestHelper {
 		userGetRequest("/Product/Category/outdoor", clazz, queryParams, listener, errorListener, activity);
 	}
 
+	public static <T> void getWall(Type clazz, JSONObject queryParams, Listener<T> listener,
+									ErrorListener errorListener, Activity activity) {
+		userGetRequest("/Product/Type/wall", clazz, queryParams, listener, errorListener, activity);
+	}
 
-	public static <T> void getGoalList(Type clazz, JSONObject queryParams, Listener<T> listener,
+	public static <T> void getFloor(Type clazz, JSONObject queryParams, Listener<T> listener,
 									   ErrorListener errorListener, Activity activity) {
-		userGetRequest("/account/goals", clazz, queryParams, listener, errorListener, activity);
+		userGetRequest("/Product/Type/floor", clazz, queryParams, listener, errorListener, activity);
 	}
 
 	public static <T> void subscribeGoal(Type clazz, JSONObject queryParams, Listener<T> listener,
