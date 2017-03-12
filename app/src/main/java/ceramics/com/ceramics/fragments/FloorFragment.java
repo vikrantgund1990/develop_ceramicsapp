@@ -80,16 +80,19 @@ public class FloorFragment extends BaseFragment implements ProductListDataListne
     }
 
     private void getWallTilesDetails(){
-        try {
-            Type responseModelType = new TypeToken<CommonJsonArrayModel<ProductDetails>>() {
-            }.getType();
-            GetProductListDataHelper dataHelper = new GetProductListDataHelper(this);
-            APIRequestHelper.getFloor(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
+        if (floorList == null) {
+            try {
+                Type responseModelType = new TypeToken<CommonJsonArrayModel<ProductDetails>>() {
+                }.getType();
+                GetProductListDataHelper dataHelper = new GetProductListDataHelper(this);
+                APIRequestHelper.getFloor(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
+            } catch (Exception e) {
+                activity.showToast(e.getMessage());
+            }
         }
-        catch (Exception e){
-            activity.showToast(e.getMessage());
+        else {
+            setData();
         }
-
     }
 
     @Override

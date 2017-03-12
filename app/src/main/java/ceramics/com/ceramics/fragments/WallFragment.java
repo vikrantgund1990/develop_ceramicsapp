@@ -64,14 +64,18 @@ public class WallFragment extends BaseFragment implements ProductListDataListner
     }
 
     private void getWallTilesDetails(){
-        try {
-            Type responseModelType = new TypeToken<CommonJsonArrayModel<ProductDetails>>() {
-            }.getType();
-            GetProductListDataHelper dataHelper = new GetProductListDataHelper(this);
-            APIRequestHelper.getWall(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
+        if (wallList == null) {
+            try {
+                Type responseModelType = new TypeToken<CommonJsonArrayModel<ProductDetails>>() {
+                }.getType();
+                GetProductListDataHelper dataHelper = new GetProductListDataHelper(this);
+                APIRequestHelper.getWall(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
+            } catch (Exception e) {
+                activity.showToast(e.getMessage());
+            }
         }
-        catch (Exception e){
-            activity.showToast(e.getMessage());
+        else {
+            setData();
         }
 
     }

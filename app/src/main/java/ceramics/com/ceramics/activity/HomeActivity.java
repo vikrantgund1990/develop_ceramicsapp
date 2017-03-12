@@ -2,6 +2,7 @@ package ceramics.com.ceramics.activity;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -74,10 +75,21 @@ public class HomeActivity extends BaseActivity implements ActionBarListener {
 
     @Override
     public void onBackPressed() {
-        if (isHome){
-            super.onBackPressed();
+
+        try {
+            FragmentManager fm = getSupportFragmentManager();
+            if (fm != null && fm.getBackStackEntryCount() <= 0) {
+               if (!isHome){
+                   openProductTypeListFragment();
+               }
+               else
+                   super.onBackPressed();
+            }
+            else
+                super.onBackPressed();
+        } catch ( Exception e){
+            e.printStackTrace();
         }
-        openProductTypeListFragment();
     }
 
     @Override
