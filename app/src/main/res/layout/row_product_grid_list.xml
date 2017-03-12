@@ -20,6 +20,8 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:scaleType="fitXY"
+            android:clickable="false"
+            android:focusable="false"
             />
 
         <View
@@ -41,7 +43,10 @@
             android:textColor="@color/black"
             android:text="Anjali Mixer Grinder Techno"
             android:textSize="14sp"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:clickable="false"
+            android:focusable="false"
+            />
 
     </LinearLayout>
 
