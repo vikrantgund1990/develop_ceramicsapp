@@ -11,7 +11,9 @@
     <color name="black_alpha_50">#80000000</color>
     <color name="black_alpha_80">#CC000000</color>
 
-    <color name="app_color_alpha_50">#A6F39C12</color>
-    <color name="app_color">#F39C12</color>
+    <color name="app_color_alpha_50">#A6FFFFFF</color>
+    <color name="app_color">#F1F1F1</color>
+    <color name="gray">#E7E7E7</color>
+    <color name="text_color">#929292</color>
 
 </resources>

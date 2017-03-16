@@ -7,17 +7,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         android:background="@drawable/product_list"
         android:orientation="vertical">
 
         <com.android.volley.toolbox.NetworkImageView
             android:src="@mipmap/merchandise_stub_image"
             android:id="@+id/imgProductImage"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dip"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_margin="@dimen/ten_dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:scaleType="fitXY"
             android:clickable="false"
@@ -29,7 +27,7 @@
             android:layout_height="0.5dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:background="@color/black_alpha_80" />
+            android:background="@color/gray" />
 
         <TextView
             android:id="@+id/tvProductName"
@@ -40,7 +38,7 @@
             android:inputType="text"
             android:padding="10dp"
             android:maxLines="1"
-            android:textColor="@color/black"
+            android:textColor="@color/text_color"
             android:text="Anjali Mixer Grinder Techno"
             android:textSize="14sp"
             android:layout_gravity="center_horizontal"

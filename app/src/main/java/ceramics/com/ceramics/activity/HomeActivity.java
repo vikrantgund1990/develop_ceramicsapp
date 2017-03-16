@@ -12,6 +12,7 @@ import android.view.View;
 import ceramics.com.ceramics.R;
 import ceramics.com.ceramics.custom.ActionBarListener;
 import ceramics.com.ceramics.custom.CustomActionBar;
+import ceramics.com.ceramics.fragments.DashboardFragment;
 import ceramics.com.ceramics.fragments.FloorFragment;
 import ceramics.com.ceramics.fragments.ProductTypeListFragment;
 import ceramics.com.ceramics.fragments.WallFragment;
@@ -20,7 +21,7 @@ public class HomeActivity extends BaseActivity implements ActionBarListener {
 
     private CustomActionBar actionBar;
     private DrawerLayout drawer_parent;
-    private Fragment wallFragment,floorFragment,productTypeFragment;
+    private Fragment wallFragment,floorFragment,productTypeFragment,dashboardFragment;
     private boolean isHome = true;
 
     @Override
@@ -28,13 +29,22 @@ public class HomeActivity extends BaseActivity implements ActionBarListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
-        openProductTypeListFragment();
+        openDashboardFragment();
     }
 
     private void initView(){
         actionBar = (CustomActionBar)findViewById(R.id.action_bar);
         drawer_parent = (DrawerLayout) findViewById(R.id.drawer_parent);
         actionBar.setActionBarListner(this);
+    }
+
+    public void openDashboardFragment(){
+        isHome = true;
+        if (dashboardFragment == null) {
+            dashboardFragment = new DashboardFragment();
+        }
+        loadFragment(dashboardFragment,R.id.base_layout,false);
+        hideSlidingMenu();
     }
 
     public void openProductTypeListFragment(){
