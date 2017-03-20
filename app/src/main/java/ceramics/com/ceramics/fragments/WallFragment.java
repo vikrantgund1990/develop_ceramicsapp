@@ -52,6 +52,7 @@ public class WallFragment extends BaseFragment implements ProductListDataListner
     public void onResume() {
         super.onResume();
         activity.setActionBarTitle("Wall Tiles");
+        activity.showBackOption(true);
     }
 
     private void initView(View view){

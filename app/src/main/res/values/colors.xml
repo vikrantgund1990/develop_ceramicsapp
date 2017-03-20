@@ -15,5 +15,6 @@
     <color name="app_color">#F1F1F1</color>
     <color name="gray">#E7E7E7</color>
     <color name="text_color">#929292</color>
+    <color name="button_color">#f9a60c</color>
 
 </resources>

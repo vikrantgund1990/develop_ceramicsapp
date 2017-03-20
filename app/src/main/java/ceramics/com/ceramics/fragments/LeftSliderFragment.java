@@ -43,10 +43,8 @@ public class LeftSliderFragment extends BaseFragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.wall:
-                openWallFragment();
                 break;
             case R.id.floor:
-                openFloorFragment();
                 break;
             case R.id.home:
                 openHome();

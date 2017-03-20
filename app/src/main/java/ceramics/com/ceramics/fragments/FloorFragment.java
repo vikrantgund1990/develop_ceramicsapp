@@ -54,6 +54,7 @@ public class FloorFragment extends BaseFragment implements ProductListDataListne
     public void onResume() {
         super.onResume();
         activity.setActionBarTitle("Floor Tiles");
+        activity.showBackOption(true);
     }
 
     private void initView(View view){

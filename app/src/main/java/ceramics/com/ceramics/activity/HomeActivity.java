@@ -32,6 +32,11 @@ public class HomeActivity extends BaseActivity implements ActionBarListener {
         openDashboardFragment();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void initView(){
         actionBar = (CustomActionBar)findViewById(R.id.action_bar);
         drawer_parent = (DrawerLayout) findViewById(R.id.drawer_parent);
@@ -84,9 +89,14 @@ public class HomeActivity extends BaseActivity implements ActionBarListener {
     }
 
     @Override
-    public void onBackPressed() {
+    public void showBackOption(boolean flag) {
+        actionBar.showBackOption(flag);
+    }
 
-        try {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        /*try {
             FragmentManager fm = getSupportFragmentManager();
             if (fm != null && fm.getBackStackEntryCount() <= 0) {
                if (!isHome){
@@ -99,12 +109,12 @@ public class HomeActivity extends BaseActivity implements ActionBarListener {
                 super.onBackPressed();
         } catch ( Exception e){
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
     public void onBackIconPressed() {
-
+        onBackPressed();
     }
 
     @Override

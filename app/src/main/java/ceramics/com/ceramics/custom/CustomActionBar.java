@@ -67,6 +67,17 @@ public class CustomActionBar extends LinearLayout implements View.OnClickListene
         }
     }
 
+    public void showBackOption(boolean flag){
+        if (flag){
+            ivActionBack.setVisibility(View.VISIBLE);
+            ivActionMenu.setVisibility(View.GONE);
+        }
+        else {
+            ivActionBack.setVisibility(View.GONE);
+            ivActionMenu.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void onBackClick(){
         if (actionBarListener != null){
             actionBarListener.onBackIconPressed();

@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
+import ceramics.com.ceramics.R;
+
 /**
  * Created by vikrantg on 25-02-2017.
  */
@@ -25,10 +27,12 @@ public abstract class BaseActivity extends FragmentActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (isBackStack)
             fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
         fragmentTransaction.replace(fragmentLayoutID, fragment);
         fragmentTransaction.commit();
     }
 
     public abstract void setActionBarTitle(String title);
+    public abstract void showBackOption(boolean flag);
 }
 

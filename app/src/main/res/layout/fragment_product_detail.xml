@@ -1,113 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="@dimen/fifteen_dp"
-        android:background="@drawable/product_list"
-        >
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/product_image"
-            android:layout_width="280dip"
-            android:layout_height="150dip"
-            android:scaleType="fitXY"
-            />
-
-    </LinearLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
+            android:id="@+id/layout_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/product_list"
-                >
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="@dimen/ten_dp"
-                    android:text="Product"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    />
-                <TextView
-                    android:id="@+id/product"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="@dimen/ten_dp"
-                    android:text="Product"
-                    android:textColor="@color/text_color"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/product_list"
-                >
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="@dimen/ten_dp"
-                    android:text="Size"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    />
-                <TextView
-                    android:id="@+id/size"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="@dimen/ten_dp"
-                    android:text="Product"
-                    android:textColor="@color/text_color"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/product_list"
-                >
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="@dimen/ten_dp"
-                    android:text="Cost"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    />
-                <TextView
-                    android:id="@+id/cost"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="@dimen/ten_dp"
-                    android:text="Product"
-                    android:textColor="@color/text_color"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    />
-            </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/product_list"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/fifteen_dp">
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/product_image"
+                android:layout_width="280dip"
+                android:layout_height="150dip"
+                android:scaleType="fitXY" />
+
         </LinearLayout>
-    </ScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_image">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/product_list"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Product"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/product"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Product"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/product_list"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Size"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/size"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Product"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/product_list"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Cost"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/cost"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Product"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+        <Button
+            android:id="@+id/purchase_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="Where to Buy?"
+            style="@style/NormalButton"
+            />
+    </RelativeLayout>
+
+   <!-- <fragment
+        android:id="@+id/purchase_details_fragment"
+        android:name="ceramics.com.ceramics.fragments.LeftSliderFragment"
+        android:layout_width="match_parent"
+        android:layout_height="500dip"
+        android:layout_gravity="bottom" />-->
 </LinearLayout>

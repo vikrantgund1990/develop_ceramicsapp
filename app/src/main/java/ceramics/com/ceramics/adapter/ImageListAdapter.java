@@ -26,24 +26,18 @@ public class ImageListAdapter extends ArrayAdapter<String> {
     private BaseActivity activity;
     private ArrayList<String> imageList;
     private LayoutInflater inflater;
-    private String imgageBaseURL = "http://images.ceramicskart.com/img/";
+    private String imgageBaseURL = "http://images.ceramicskart.com/img/home/";
     private ImageLoader imageLoader;
 
-    public ImageListAdapter(BaseActivity context) {
-        super(context, R.layout.row_image_lsit);
+    public ImageListAdapter(BaseActivity context,ArrayList<String> imageList) {
+        super(context, R.layout.row_image_lsit,imageList);
         this.activity = context;
+        this.imageList = imageList;
         inflater = LayoutInflater.from(context);
         imageLoader = CeramicsApplication.getInstance().getImageLoader();
-        addItems();
     }
 
-    private void addItems(){
-        imageList = new ArrayList<>();
-        imageList.add("");
-        imageList.add("");
-        imageList.add("");
-        imageList.add("");
-    }
+
 
     @NonNull
     @Override

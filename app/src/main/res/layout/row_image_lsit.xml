@@ -2,8 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/image_product"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/home_screen_image_row" />
+        android:layout_height="@dimen/home_screen_image_row"
+        android:orientation="vertical">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/image_product"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY" />
+    </LinearLayout>
 </LinearLayout>
