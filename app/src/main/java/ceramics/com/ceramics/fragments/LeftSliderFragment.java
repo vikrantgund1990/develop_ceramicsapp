@@ -47,7 +47,6 @@ public class LeftSliderFragment extends BaseFragment implements View.OnClickList
             case R.id.floor:
                 break;
             case R.id.home:
-                openHome();
                 break;
         }
     }
