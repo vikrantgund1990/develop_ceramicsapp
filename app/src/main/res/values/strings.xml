@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ceramics</string>
+    <string name="app_name">CeramicsKart</string>
     <string name="no_internet">Sorry! No Internet Connection!</string>
     <string name="generic_server_down">Generic Server Down....</string>
     <string name="generic_error">Generic Error....</string>
