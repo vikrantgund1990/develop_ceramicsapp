@@ -15,6 +15,7 @@ import ceramics.com.ceramics.custom.CustomActionBar;
 import ceramics.com.ceramics.fragments.DashboardFragment;
 import ceramics.com.ceramics.fragments.FloorFragment;
 import ceramics.com.ceramics.fragments.ProductTypeListFragment;
+import ceramics.com.ceramics.fragments.ReferenceCodeDialogFragment;
 import ceramics.com.ceramics.fragments.WallFragment;
 
 public class HomeActivity extends BaseActivity implements ActionBarListener {
@@ -22,6 +23,7 @@ public class HomeActivity extends BaseActivity implements ActionBarListener {
     private CustomActionBar actionBar;
     private DrawerLayout drawer_parent;
     private Fragment wallFragment,floorFragment,productTypeFragment,dashboardFragment;
+    private ReferenceCodeDialogFragment referCodefragment;
     private boolean isHome = true;
 
     @Override
@@ -49,6 +51,14 @@ public class HomeActivity extends BaseActivity implements ActionBarListener {
             dashboardFragment = new DashboardFragment();
         }
         loadFragment(dashboardFragment,R.id.base_layout,false);
+        hideSlidingMenu();
+    }
+
+    public void openReferCodeFragment(){
+        if (referCodefragment == null){
+            referCodefragment = new ReferenceCodeDialogFragment();
+        }
+        referCodefragment.show(getFragmentManager(),"");
         hideSlidingMenu();
     }
 
