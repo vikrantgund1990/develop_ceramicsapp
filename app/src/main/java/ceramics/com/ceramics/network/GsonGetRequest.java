@@ -3,6 +3,7 @@ package ceramics.com.ceramics.network;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -27,6 +28,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import ceramics.com.ceramics.R;
 import ceramics.com.ceramics.utils.AppConstants;
 
 /**
@@ -57,7 +59,8 @@ public class GsonGetRequest<T> extends Request<T> {
 		this.headers = headers;
 		this.listener = listener;
 		progressDialog = ProgressDialog.show(activity, "Please Wait", "Loading...");
-
+		progressDialog.setContentView(R.layout.custome_progress_bar);
+		progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 		progressDialog.setCancelable(true);
 		progressDialog.setCanceledOnTouchOutside(false);
 		progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {

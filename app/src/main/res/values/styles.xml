@@ -31,4 +31,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColorHint">@color/text_color</item>
     </style>
+    <style name="CircularProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/button_color</item>
+    </style>
 </resources>
