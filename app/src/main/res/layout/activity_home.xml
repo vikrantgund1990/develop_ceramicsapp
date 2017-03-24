@@ -22,6 +22,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/action_bar"
         ></FrameLayout>
+     <ListView
+         android:id="@+id/list_location"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_below="@+id/action_bar"
+         android:padding="@dimen/ten_dp"
+         android:visibility="gone"
+         ></ListView>
     </RelativeLayout>
     <fragment
         android:id="@+id/left_fragment"

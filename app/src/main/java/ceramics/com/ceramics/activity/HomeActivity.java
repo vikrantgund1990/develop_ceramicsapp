@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -30,6 +34,9 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
+import java.util.List;
+import java.util.Locale;
+
 import ceramics.com.ceramics.R;
 import ceramics.com.ceramics.custom.ActionBarListener;
 import ceramics.com.ceramics.custom.CustomActionBar;
@@ -38,10 +45,12 @@ import ceramics.com.ceramics.fragments.FloorFragment;
 import ceramics.com.ceramics.fragments.ProductTypeListFragment;
 import ceramics.com.ceramics.fragments.ReferenceCodeDialogFragment;
 import ceramics.com.ceramics.fragments.WallFragment;
+import ceramics.com.ceramics.utils.GPSTracker;
 
 public class HomeActivity extends BaseActivity implements ActionBarListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private CustomActionBar actionBar;
+    private ListView lvLocation;
     private DrawerLayout drawer_parent;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
@@ -65,6 +74,7 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
     private void initView() {
         actionBar = (CustomActionBar) findViewById(R.id.action_bar);
         drawer_parent = (DrawerLayout) findViewById(R.id.drawer_parent);
+        lvLocation = (ListView)findViewById(R.id.list_location);
         actionBar.setActionBarListner(this);
         checkLocationPermission();
         checkGPS();
@@ -138,7 +148,7 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
             checkGPS();
         } else {
            /*TODO: call location list API*/
-            showToast("feth location list from API and show directly");
+            showToast("fetch location list from API and show directly");
             updateRegion(true);
         }
     }
@@ -214,12 +224,12 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
 
     @Override
     public void onConnectionSuspended(int i) {
-        showToast("Suspended");
+        showToast("Failed to get your location");
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        showToast("Failed");
+        showToast("Failed to get your location");
     }
 
     public void checkGPS() {
@@ -310,11 +320,46 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
 
     private void updateRegion(boolean showList){
         if (showList){
-
+            showLocationList(true);
         }
         else {
+            List<Address> addresses = getLocationFromLatLon();
+            if (addresses != null){
 
+            }
+            else {
+                showLocationList(true);
+            }
         }
+    }
+
+    private void showLocationList(boolean flag){
+        if (flag){
+            lvLocation.setVisibility(View.VISIBLE);
+        }
+        else {
+            lvLocation.setVisibility(View.GONE);
+        }
+    }
+
+    private List<Address> getLocationFromLatLon(){
+        List<Address> addresses = null;
+        double latitude = 0,longitude = 0;
+        try {
+            if (googleApiClient != null && googleApiClient.isConnected()) {
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                GPSTracker gpsTracker = new GPSTracker(this);
+                latitude = gpsTracker.getLatitude();
+                longitude = gpsTracker.getLongitude();
+                addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5    if()
+            }
+
+
+        } catch (Exception e) {
+            showToast("Sorry! Unable to fetch your location. Please select your location from list");
+        }
+
+        return addresses;
     }
 
     protected void startLocationUpdates() {
