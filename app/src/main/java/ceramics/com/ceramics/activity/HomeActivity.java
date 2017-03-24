@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ import java.util.List;
 import java.util.Locale;
 
 import ceramics.com.ceramics.R;
+import ceramics.com.ceramics.adapter.LocationListAdapter;
 import ceramics.com.ceramics.custom.ActionBarListener;
 import ceramics.com.ceramics.custom.CustomActionBar;
 import ceramics.com.ceramics.fragments.DashboardFragment;
@@ -70,6 +72,7 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
     private ReferenceCodeDialogFragment referCodefragment;
     private boolean isHome = true;
     private ArrayList<UserLocationData> locationDataList;
+    private LocationListAdapter locationListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +98,13 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         drawer_parent = (DrawerLayout) findViewById(R.id.drawer_parent);
         lvLocation = (ListView)findViewById(R.id.list_location);
         actionBar.setActionBarListner(this);
+
+        lvLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                setUserLocation(locationListAdapter.getItem(position));
+            }
+        });
     }
 
     public void openDashboardFragment() {
@@ -371,12 +381,17 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         applicationDataModel.setUserLocationData(userLocation);
         preferenceData.setApplicationData(applicationDataModel);
         showToast("Hello! You are in"+userLocation.getName());
+        showLocationList(false);
         openDashboardFragment();
     }
 
     private void showLocationList(boolean flag){
         if (flag){
             lvLocation.setVisibility(View.VISIBLE);
+            if (locationListAdapter == null){
+                locationListAdapter = new LocationListAdapter(this,locationDataList);
+            }
+            lvLocation.setAdapter(locationListAdapter);
         }
         else {
             lvLocation.setVisibility(View.GONE);

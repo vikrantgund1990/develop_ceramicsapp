@@ -29,6 +29,7 @@
          android:layout_below="@+id/action_bar"
          android:padding="@dimen/ten_dp"
          android:visibility="gone"
+         android:background="@color/white"
          ></ListView>
     </RelativeLayout>
     <fragment
