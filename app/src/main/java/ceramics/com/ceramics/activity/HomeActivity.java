@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -33,7 +35,12 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,6 +52,11 @@ import ceramics.com.ceramics.fragments.FloorFragment;
 import ceramics.com.ceramics.fragments.ProductTypeListFragment;
 import ceramics.com.ceramics.fragments.ReferenceCodeDialogFragment;
 import ceramics.com.ceramics.fragments.WallFragment;
+import ceramics.com.ceramics.model.ApplicationDataModel;
+import ceramics.com.ceramics.model.UserLocationData;
+import ceramics.com.ceramics.network.APIRequestHelper;
+import ceramics.com.ceramics.network.CommonJsonArrayModel;
+import ceramics.com.ceramics.utils.ApplicationPreferenceData;
 import ceramics.com.ceramics.utils.GPSTracker;
 
 public class HomeActivity extends BaseActivity implements ActionBarListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -57,13 +69,20 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
     private Fragment wallFragment, floorFragment, productTypeFragment, dashboardFragment;
     private ReferenceCodeDialogFragment referCodefragment;
     private boolean isHome = true;
+    private ArrayList<UserLocationData> locationDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
-        openDashboardFragment();
+        ApplicationPreferenceData preferenceData = ApplicationPreferenceData.getInstance(this);
+        if (preferenceData.getApplicationData().getUserLocationData() == null){
+            callGetCitiesAPI();
+        }
+        else {
+            openDashboardFragment();
+        }
     }
 
     @Override
@@ -76,8 +95,6 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         drawer_parent = (DrawerLayout) findViewById(R.id.drawer_parent);
         lvLocation = (ListView)findViewById(R.id.list_location);
         actionBar.setActionBarListner(this);
-        checkLocationPermission();
-        checkGPS();
     }
 
     public void openDashboardFragment() {
@@ -122,6 +139,18 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         isHome = false;
         loadFragment(floorFragment, R.id.base_layout, false);
         hideSlidingMenu();
+    }
+
+    private void callGetCitiesAPI(){
+        try{
+            Type responseModelType = new TypeToken<CommonJsonArrayModel<UserLocationData>>() {
+            }.getType();
+            GetCities getCities = new GetCities();
+            APIRequestHelper.getCities(responseModelType,new JSONObject(),getCities,getCities,this);
+        }
+        catch (Exception e){
+            showToast(getString(R.string.error));
+        }
     }
 
     private boolean checkLocationPermission() {
@@ -203,7 +232,6 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        showToast("Connected");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -325,12 +353,25 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         else {
             List<Address> addresses = getLocationFromLatLon();
             if (addresses != null){
-
+                for (UserLocationData data : locationDataList){
+                    if (data.getName().equalsIgnoreCase(addresses.get(0).getLocality())){
+                        setUserLocation(data);
+                    }
+                }
             }
             else {
                 showLocationList(true);
             }
         }
+    }
+
+    private void setUserLocation(UserLocationData userLocation){
+        ApplicationPreferenceData preferenceData = ApplicationPreferenceData.getInstance(this);
+        ApplicationDataModel applicationDataModel = preferenceData.getApplicationData();
+        applicationDataModel.setUserLocationData(userLocation);
+        preferenceData.setApplicationData(applicationDataModel);
+        showToast("Hello! You are in"+userLocation.getName());
+        openDashboardFragment();
     }
 
     private void showLocationList(boolean flag){
@@ -385,5 +426,35 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         }
 
 
+    }
+
+    class GetCities implements Response.Listener<CommonJsonArrayModel<UserLocationData>>,Response.ErrorListener{
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            showToast(getString(R.string.error));
+        }
+
+        @Override
+        public void onResponse(CommonJsonArrayModel<UserLocationData> response) {
+            try{
+                if (response.isStatus()){
+                    locationDataList = response.getData();
+                    if (locationDataList != null && locationDataList.size() > 0){
+                        checkLocationPermission();
+                        checkGPS();
+                    }
+                    else {
+                        showToast(getString(R.string.error));
+                    }
+                }
+                else {
+                    showToast(getString(R.string.error));
+                }
+            }
+            catch (Exception e){
+                showToast(getString(R.string.error));
+            }
+        }
     }
 }

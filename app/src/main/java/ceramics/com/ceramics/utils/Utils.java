@@ -2,6 +2,7 @@ package ceramics.com.ceramics.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.text.TextUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,5 +36,13 @@ public class Utils {
         String timeStamp = date+"T"+"00:00:00+"+time;
         return timeStamp;
 
+    }
+
+    public static boolean isNotBlank(String value) {
+
+        if (value == null || TextUtils.isEmpty(value) || value.equalsIgnoreCase("null")) {
+            return false;
+        }
+        return true;
     }
 }

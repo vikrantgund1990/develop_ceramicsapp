@@ -161,6 +161,11 @@ public class APIRequestHelper {
 		userGetRequest("/Product/Type/floor", clazz, queryParams, listener, errorListener, activity);
 	}
 
+	public static <T> void getCities(Type clazz, JSONObject queryParams, Listener<T> listener,
+									ErrorListener errorListener, Activity activity) {
+		userGetRequest("/getcities", clazz, queryParams, listener, errorListener, activity);
+	}
+
 	public static <T> void subscribeGoal(Type clazz, JSONObject queryParams, Listener<T> listener,
 										 ErrorListener errorListener, Activity activity) {
 		userPutRequest("/account/goals/subscribe", clazz, queryParams, listener, errorListener, activity);
