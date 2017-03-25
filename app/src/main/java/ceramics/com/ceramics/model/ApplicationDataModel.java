@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 
 public class ApplicationDataModel implements Serializable {
-    private boolean isReferCodeShow;
+    private boolean isReferCodeShow = true;
     private UserLocationData userLocationData;
 
     public boolean isReferCodeShow() {

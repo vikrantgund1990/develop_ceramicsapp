@@ -124,33 +124,6 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         hideSlidingMenu();
     }
 
-    public void openProductTypeListFragment() {
-        isHome = true;
-        if (productTypeFragment == null) {
-            productTypeFragment = new ProductTypeListFragment();
-        }
-        loadFragment(productTypeFragment, R.id.base_layout, false);
-        hideSlidingMenu();
-    }
-
-    public void openWallFragment() {
-        if (wallFragment == null) {
-            wallFragment = new WallFragment();
-        }
-        isHome = false;
-        loadFragment(wallFragment, R.id.base_layout, false);
-        hideSlidingMenu();
-    }
-
-    public void openFloorFragment() {
-        if (floorFragment == null) {
-            floorFragment = new FloorFragment();
-        }
-        isHome = false;
-        loadFragment(floorFragment, R.id.base_layout, false);
-        hideSlidingMenu();
-    }
-
     private void callGetCitiesAPI(){
         try{
             Type responseModelType = new TypeToken<CommonJsonArrayModel<UserLocationData>>() {
@@ -183,12 +156,13 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0] == 0 && grantResults[1] == 0) {
-            checkGPS();
-        } else {
-           /*TODO: call location list API*/
-            showToast("fetch location list from API and show directly");
-            updateRegion(true);
+        switch (requestCode) {
+            case 1001:
+                if (grantResults.length > 0 && grantResults[0] == 0) {
+                    checkGPS();
+                } else {
+                    updateRegion(true);
+                }
         }
     }
 
@@ -281,7 +255,8 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
                 //                                          int[] grantResults)
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
-                ActivityCompat.requestPermissions(this,new String[]{ Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},1001);
+                //ActivityCompat.requestPermissions(this,new String[]{ Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},1001);
+                // return;
             }
 
 
@@ -402,12 +377,14 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         List<Address> addresses = null;
         double latitude = 0,longitude = 0;
         try {
-            if (googleApiClient != null && googleApiClient.isConnected()) {
-                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-                GPSTracker gpsTracker = new GPSTracker(this);
-                latitude = gpsTracker.getLatitude();
-                longitude = gpsTracker.getLongitude();
-                addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5    if()
+            while (latitude == 0 && longitude == 0) {
+                if (googleApiClient != null && googleApiClient.isConnected()) {
+                    Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                    GPSTracker gpsTracker = new GPSTracker(this);
+                    latitude = gpsTracker.getLatitude();
+                    longitude = gpsTracker.getLongitude();
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5    if()
+                }
             }
 
 

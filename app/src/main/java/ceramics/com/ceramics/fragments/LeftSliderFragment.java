@@ -57,13 +57,4 @@ public class LeftSliderFragment extends BaseFragment implements View.OnClickList
         }
     }
 
-    private void openWallFragment(){
-        ((HomeActivity)getActivity()).openWallFragment();
-    }
-    private void openFloorFragment(){
-        ((HomeActivity)getActivity()).openFloorFragment();
-    }
-    private void openHome(){
-        ((HomeActivity)getActivity()).openProductTypeListFragment();
-    }
 }

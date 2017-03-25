@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import ceramics.com.ceramics.R;
 import ceramics.com.ceramics.activity.BaseActivity;
 import ceramics.com.ceramics.adapter.ImageListAdapter;
+import ceramics.com.ceramics.utils.ApplicationPreferenceData;
 
 /**
  * Created by vikrantg on 16-03-2017.
@@ -59,6 +60,20 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
         addItems();
         imageListAdapter = new ImageListAdapter(activity,imageList);
         lvImages.setAdapter(imageListAdapter);
+
+        showPromotionCode();
+    }
+
+    private void showPromotionCode(){
+        ApplicationPreferenceData preferenceData = ApplicationPreferenceData.getInstance(activity);
+        if (preferenceData.getApplicationData().isReferCodeShow()){
+            openReferCodeFragment();
+        }
+    }
+
+    public void openReferCodeFragment() {
+        ReferenceCodeDialogFragment referCodefragment = new ReferenceCodeDialogFragment();
+        referCodefragment.show(activity.getFragmentManager(), "");
     }
 
     public void openWallFragment(){

@@ -11,6 +11,7 @@
         android:padding="@dimen/twenty_dp"
         >
         <EditText
+            android:id="@+id/edit_refer_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/AppEditText"
@@ -23,6 +24,7 @@
             android:layout_marginTop="@dimen/twenty_dp"
             >
             <Button
+                android:id="@+id/btn_cancel"
                 android:layout_width="0dip"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -31,6 +33,7 @@
                 android:text="Cancel"
                 />
             <Button
+                android:id="@+id/btn_submit"
                 android:layout_width="0dip"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
