@@ -11,7 +11,9 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 
+import ceramics.com.ceramics.activity.BaseActivity;
 import ceramics.com.ceramics.utils.CeramicsApplication;
+import ceramics.com.ceramics.utils.Utils;
 
 
 /**
@@ -153,12 +155,12 @@ public class APIRequestHelper {
 
 	public static <T> void getWall(Type clazz, JSONObject queryParams, Listener<T> listener,
 									ErrorListener errorListener, Activity activity) {
-		userGetRequest("/Product/Type/wall", clazz, queryParams, listener, errorListener, activity);
+		userGetRequest("/Product/Type/wall/"+Utils.getUserLocation((BaseActivity)activity), clazz, queryParams, listener, errorListener, activity);
 	}
 
 	public static <T> void getFloor(Type clazz, JSONObject queryParams, Listener<T> listener,
 									   ErrorListener errorListener, Activity activity) {
-		userGetRequest("/Product/Type/floor", clazz, queryParams, listener, errorListener, activity);
+		userGetRequest("/Product/Type/floor/"+ Utils.getUserLocation((BaseActivity)activity), clazz, queryParams, listener, errorListener, activity);
 	}
 
 	public static <T> void getCities(Type clazz, JSONObject queryParams, Listener<T> listener,

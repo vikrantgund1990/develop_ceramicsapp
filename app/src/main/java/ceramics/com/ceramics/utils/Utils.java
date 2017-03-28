@@ -1,11 +1,14 @@
 package ceramics.com.ceramics.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.text.TextUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import ceramics.com.ceramics.activity.BaseActivity;
 
 /**
  * Created by vikrantg on 22-06-2016.
@@ -44,5 +47,10 @@ public class Utils {
             return false;
         }
         return true;
+    }
+
+    public static String getUserLocation(BaseActivity activity){
+        ApplicationPreferenceData preferenceData = ApplicationPreferenceData.getInstance(activity);
+        return preferenceData.getApplicationData().getUserLocationData().getName();
     }
 }

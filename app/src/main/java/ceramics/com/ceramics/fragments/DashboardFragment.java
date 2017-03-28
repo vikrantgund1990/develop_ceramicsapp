@@ -26,7 +26,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
     private ListView lvImages;
     private BaseActivity activity;
     private ArrayList<String> imageList;
-    private Fragment wallFragment,floorFragment;
+    private Fragment wallFragment,floorFragment,productByApplication;
     private TextView tvWall,tvFloor;
 
     @Nullable
@@ -45,7 +45,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
-        activity.setActionBarTitle("Ceramics");
+        activity.setActionBarTitle(getString(R.string.app_name));
         activity.showBackOption(false);
     }
 
@@ -88,6 +88,13 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
             floorFragment = new FloorFragment();
         }
         activity.loadFragment(floorFragment, R.id.base_layout, true);
+    }
+
+    private void openProductByApplicationFragment(){
+        if (productByApplication == null) {
+            productByApplication = new ProductByApplicationListFragment();
+        }
+        activity.loadFragment(productByApplication, R.id.base_layout, true);
     }
 
     private void addItems(){

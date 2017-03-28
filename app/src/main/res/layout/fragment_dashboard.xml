@@ -70,6 +70,38 @@
             android:background="@drawable/rounded_edittext"
             />
     </LinearLayout>
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/fifteen_dp"
+        android:paddingRight="@dimen/fifteen_dp"
+        android:paddingTop="@dimen/five_dp">
+        <TextView
+            android:id="@+id/text_other_product"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/fifteen_dp"
+            android:layout_marginRight="2dip"
+            android:text="Other Products"
+            android:textSize="14sp"
+            android:background="@drawable/rounded_edittext"
+            />
+        <TextView
+            android:id="@+id/text_application_product"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/fifteen_dp"
+            android:layout_marginRight="2dip"
+            android:text="Products by Application"
+            android:textSize="14sp"
+            android:background="@drawable/rounded_edittext"
+            />
+    </LinearLayout>-->
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

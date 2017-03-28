@@ -9,6 +9,8 @@ import android.widget.FrameLayout;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
@@ -20,16 +22,19 @@ import ceramics.com.ceramics.activity.BaseActivity;
 import ceramics.com.ceramics.model.ProductDetails;
 import ceramics.com.ceramics.network.APIRequestHelper;
 import ceramics.com.ceramics.network.CommonJsonArrayModel;
+import ceramics.com.ceramics.utils.CeramicsApplication;
 import ceramics.com.ceramics.utils.Utils;
 
 /**
  * Created by vikrantg on 25-02-2017.
  */
 
-public class ProductTypeListFragment extends BaseFragment implements View.OnClickListener{
+public class ProductByApplicationListFragment extends BaseFragment implements View.OnClickListener{
 
     private FrameLayout flKitchen,flBathroom,flLivingRoom,flBedroom,flOffice,flOutdoor;
     private BaseActivity activity;
+    private NetworkImageView ivBathroom,ivBedroom,ivLivingRoom,ivKitchen,ivOutdoor,ivOffice;
+    private String imgageBaseURL = "http://images.ceramicskart.com/application/";
 
     @Nullable
     @Override
@@ -42,12 +47,13 @@ public class ProductTypeListFragment extends BaseFragment implements View.OnClic
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity)getActivity();
         initView(getView());
+        setImage();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        activity.setActionBarTitle("Ceramics");
+        activity.setActionBarTitle("Product by Application");
     }
 
     private void initView(View view){
@@ -58,12 +64,29 @@ public class ProductTypeListFragment extends BaseFragment implements View.OnClic
         flOffice = (FrameLayout)view.findViewById(R.id.office);
         flOutdoor = (FrameLayout)view.findViewById(R.id.outdoor);
 
+        ivBathroom = (NetworkImageView)view.findViewById(R.id.image_bathroom);
+        ivBedroom = (NetworkImageView)view.findViewById(R.id.image_bedroom);
+        ivLivingRoom = (NetworkImageView)view.findViewById(R.id.image_living_room);
+        ivKitchen = (NetworkImageView)view.findViewById(R.id.image_kitchen);
+        ivOutdoor = (NetworkImageView)view.findViewById(R.id.image_outdoor);
+        ivOffice = (NetworkImageView)view.findViewById(R.id.image_office);
+
         flKitchen.setOnClickListener(this);
         flLivingRoom.setOnClickListener(this);
         flBathroom.setOnClickListener(this);
         flBedroom.setOnClickListener(this);
         flOffice.setOnClickListener(this);
         flOutdoor.setOnClickListener(this);
+    }
+
+    private void setImage(){
+        ImageLoader imageLoader = CeramicsApplication.getInstance().getImageLoader();
+        ivBathroom.setImageUrl(imgageBaseURL+"bathroom.jpg",imageLoader);
+        ivBedroom.setImageUrl(imgageBaseURL+"bedroom.jpg",imageLoader);
+        ivLivingRoom.setImageUrl(imgageBaseURL+"living_room.jpg",imageLoader);
+        ivKitchen.setImageUrl(imgageBaseURL+"kitchen.jpg",imageLoader);
+        ivOutdoor.setImageUrl(imgageBaseURL+"outdoor.jpg",imageLoader);
+        ivOffice.setImageUrl(imgageBaseURL+"office.jpg",imageLoader);
     }
 
     @Override

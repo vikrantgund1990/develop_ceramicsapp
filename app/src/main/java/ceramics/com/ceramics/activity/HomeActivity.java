@@ -51,7 +51,6 @@ import ceramics.com.ceramics.custom.ActionBarListener;
 import ceramics.com.ceramics.custom.CustomActionBar;
 import ceramics.com.ceramics.fragments.DashboardFragment;
 import ceramics.com.ceramics.fragments.FloorFragment;
-import ceramics.com.ceramics.fragments.ProductTypeListFragment;
 import ceramics.com.ceramics.fragments.ReferenceCodeDialogFragment;
 import ceramics.com.ceramics.fragments.WallFragment;
 import ceramics.com.ceramics.model.ApplicationDataModel;
@@ -80,12 +79,14 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         setContentView(R.layout.activity_home);
         initView();
         ApplicationPreferenceData preferenceData = ApplicationPreferenceData.getInstance(this);
-        if (preferenceData.getApplicationData().getUserLocationData() == null){
+        callGetCitiesAPI();
+        /*Execute below code to get location from preferences*/
+        /*if (preferenceData.getApplicationData().getUserLocationData() == null){
             callGetCitiesAPI();
         }
         else {
             openDashboardFragment();
-        }
+        }*/
     }
 
     @Override
@@ -338,11 +339,14 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         else {
             List<Address> addresses = getLocationFromLatLon();
             if (addresses != null){
-                for (UserLocationData data : locationDataList){
+                UserLocationData data = new UserLocationData();
+                data.setName(addresses.get(0).getLocality());
+                setUserLocation(data);
+                /*for (UserLocationData data : locationDataList){
                     if (data.getName().equalsIgnoreCase(addresses.get(0).getLocality())){
                         setUserLocation(data);
                     }
-                }
+                }*/
             }
             else {
                 showLocationList(true);
