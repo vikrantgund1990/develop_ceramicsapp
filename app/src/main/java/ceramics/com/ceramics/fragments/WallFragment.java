@@ -93,7 +93,8 @@ public class WallFragment extends BaseFragment implements ProductListDataListner
             }
         }
         catch (Exception e){
-            activity.showToast(getString(R.string.error));
+            if (activity != null)
+                activity.showToast(getString(R.string.error));
         }
     }
 
