@@ -31,6 +31,23 @@
          android:visibility="gone"
          android:background="@color/white"
          ></ListView>
+      <LinearLayout
+          android:id="@+id/progress_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_centerInParent="true"
+          android:gravity="center_horizontal"
+          android:visibility="gone"
+          >
+          <include layout="@layout/custome_progress_bar"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Fetching your current location.Please wait"
+              android:padding="10dp"
+              />
+      </LinearLayout>
     </RelativeLayout>
     <fragment
         android:id="@+id/left_fragment"

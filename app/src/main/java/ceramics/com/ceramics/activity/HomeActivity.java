@@ -1,10 +1,13 @@
 package ceramics.com.ceramics.activity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -19,6 +22,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -70,8 +74,10 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
     private Fragment wallFragment, floorFragment, productTypeFragment, dashboardFragment;
     private ReferenceCodeDialogFragment referCodefragment;
     private boolean isHome = true;
+    double latitude = 0, longitude = 0;
     private ArrayList<UserLocationData> locationDataList;
     private LocationListAdapter locationListAdapter;
+    private LinearLayout llProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +103,8 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
     private void initView() {
         actionBar = (CustomActionBar) findViewById(R.id.action_bar);
         drawer_parent = (DrawerLayout) findViewById(R.id.drawer_parent);
-        lvLocation = (ListView)findViewById(R.id.list_location);
+        lvLocation = (ListView) findViewById(R.id.list_location);
+        llProgress = (LinearLayout)findViewById(R.id.progress_layout);
         actionBar.setActionBarListner(this);
 
         lvLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -125,14 +132,13 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         hideSlidingMenu();
     }
 
-    private void callGetCitiesAPI(){
-        try{
+    private void callGetCitiesAPI() {
+        try {
             Type responseModelType = new TypeToken<CommonJsonArrayModel<UserLocationData>>() {
             }.getType();
             GetCities getCities = new GetCities();
-            APIRequestHelper.getCities(responseModelType,new JSONObject(),getCities,getCities,this);
-        }
-        catch (Exception e){
+            APIRequestHelper.getCities(responseModelType, new JSONObject(), getCities, getCities, this);
+        } catch (Exception e) {
             showToast(getString(R.string.error));
         }
     }
@@ -230,8 +236,8 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 googleApiClient);
         if (mLastLocation != null) {
-            double latitude = mLastLocation.getLatitude();
-            double longitude = mLastLocation.getLongitude();
+            latitude = mLastLocation.getLatitude();
+            longitude = mLastLocation.getLongitude();
         }
     }
 
@@ -296,8 +302,8 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
                         case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                             // Location settings are not satisfied. But could be fixed by showing the user
                             // a dialog.
-                                // Show the dialog by calling startResolutionForResult(),
-                                // and check the result in onActivityResult().
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
                             try {
                                 status.startResolutionForResult(HomeActivity.this, 1000);
                             } catch (IntentSender.SendIntentException e) {
@@ -321,24 +327,22 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000){
-            if (resultCode == -1){
+        if (requestCode == 1000) {
+            if (resultCode == -1) {
                 updateRegion(false);
-            }
-            else {
+            } else {
                 /*TODO: call location API and show location in list*/
                 updateRegion(true);
             }
         }
     }
 
-    private void updateRegion(boolean showList){
-        if (showList){
+    private void updateRegion(boolean showList) {
+        if (showList) {
             showLocationList(true);
-        }
-        else {
+        } else {
             List<Address> addresses = getLocationFromLatLon();
-            if (addresses != null){
+            if (addresses != null) {
                 UserLocationData data = new UserLocationData();
                 data.setName(addresses.get(0).getLocality());
                 setUserLocation(data);
@@ -347,53 +351,70 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
                         setUserLocation(data);
                     }
                 }*/
-            }
-            else {
+            } else {
                 showLocationList(true);
             }
         }
     }
 
-    private void setUserLocation(UserLocationData userLocation){
+    private void setUserLocation(UserLocationData userLocation) {
         ApplicationPreferenceData preferenceData = ApplicationPreferenceData.getInstance(this);
         ApplicationDataModel applicationDataModel = preferenceData.getApplicationData();
         applicationDataModel.setUserLocationData(userLocation);
         preferenceData.setApplicationData(applicationDataModel);
-        showToast("Hello! You are in"+userLocation.getName());
+        showToast("Hello! You are in" + userLocation.getName());
         showLocationList(false);
         openDashboardFragment();
     }
 
-    private void showLocationList(boolean flag){
-        if (flag){
+    private void showLocationList(boolean flag) {
+        if (flag) {
             lvLocation.setVisibility(View.VISIBLE);
-            if (locationListAdapter == null){
-                locationListAdapter = new LocationListAdapter(this,locationDataList);
+            if (locationListAdapter == null) {
+                locationListAdapter = new LocationListAdapter(this, locationDataList);
             }
             lvLocation.setAdapter(locationListAdapter);
-        }
-        else {
+        } else {
             lvLocation.setVisibility(View.GONE);
         }
     }
 
-    private List<Address> getLocationFromLatLon(){
+    private List<Address> getLocationFromLatLon() {
         List<Address> addresses = null;
-        double latitude = 0,longitude = 0;
         try {
+            llProgress.setVisibility(View.VISIBLE);
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             while (latitude == 0 && longitude == 0) {
                 if (googleApiClient != null && googleApiClient.isConnected()) {
-                    Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
                     GPSTracker gpsTracker = new GPSTracker(this);
                     latitude = gpsTracker.getLatitude();
                     longitude = gpsTracker.getLongitude();
-                    addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5    if()
+
+                    if (latitude == 0 && longitude == 0) {
+                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                        }
+                        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                                googleApiClient);
+                        if (mLastLocation != null) {
+                            latitude = mLastLocation.getLatitude();
+                            longitude = mLastLocation.getLongitude();
+                        }
+                    }
                 }
             }
-
+            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5    if()
+            llProgress.setVisibility(View.GONE);
 
         } catch (Exception e) {
-            showToast("Sorry! Unable to fetch your location. Please select your location from list");
+            showToast("Sorry! Unable to fetch your location.");
         }
 
         return addresses;
@@ -453,4 +474,5 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
             }
         }
     }
+
 }

@@ -83,7 +83,7 @@ public class GPSTracker extends Service implements LocationListener{
                     int permissionCheck = ContextCompat.checkSelfPermission(mContext,
                             Manifest.permission.ACCESS_FINE_LOCATION);
                     if(PackageManager.PERMISSION_GRANTED == permissionCheck) {
-                        if (location == null) {
+                        /*if (location == null) {*/
                             locationManager.requestLocationUpdates(
                                     LocationManager.GPS_PROVIDER,
                                     MIN_TIME_BW_UPDATES,
@@ -96,7 +96,7 @@ public class GPSTracker extends Service implements LocationListener{
                                     longitude = location.getLongitude();
                                 }
                             }
-                        }
+                        /*}*/
                     }
                 }
             }
