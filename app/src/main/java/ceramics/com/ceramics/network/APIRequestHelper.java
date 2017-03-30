@@ -2,6 +2,7 @@ package ceramics.com.ceramics.network;
 
 import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response.ErrorListener;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 
+import ceramics.com.ceramics.R;
 import ceramics.com.ceramics.activity.BaseActivity;
 import ceramics.com.ceramics.utils.CeramicsApplication;
 import ceramics.com.ceramics.utils.Utils;
@@ -35,18 +37,22 @@ public class APIRequestHelper {
 	private static <T> void userGetRequest(String requestType, Type clazz,
 										   JSONObject queryParams, Listener<T> listener,
 										   ErrorListener errorListener, Activity activity) {
-
-		APIRequestHelper.requestType = requestType;
-		APIRequestHelper.clazz = clazz;
-		APIRequestHelper.queryParams = queryParams;
-		APIRequestHelper.listener = listener;
-		APIRequestHelper.errorListener = errorListener;
-		APIRequestHelper.activity = activity;
-		APIRequestHelper.RequestType = Request.Method.GET;
-		GsonGetRequest<T> mrequest = new GsonGetRequest<T>(BASE_URL
-				+ requestType, clazz, queryParams, null, listener,
-				errorListener, activity);
-		CeramicsApplication.getInstance().addToRequestQueue(mrequest);
+		if(Utils.isNetworkConnected(activity)) {
+			APIRequestHelper.requestType = requestType;
+			APIRequestHelper.clazz = clazz;
+			APIRequestHelper.queryParams = queryParams;
+			APIRequestHelper.listener = listener;
+			APIRequestHelper.errorListener = errorListener;
+			APIRequestHelper.activity = activity;
+			APIRequestHelper.RequestType = Request.Method.GET;
+			GsonGetRequest<T> mrequest = new GsonGetRequest<T>(BASE_URL
+					+ requestType, clazz, queryParams, null, listener,
+					errorListener, activity);
+			CeramicsApplication.getInstance().addToRequestQueue(mrequest);
+		}
+		else {
+			Toast.makeText(activity, R.string.no_internet,Toast.LENGTH_SHORT).show();
+		}
 
 	}
 
