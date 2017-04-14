@@ -15,4 +15,9 @@
             android:adjustViewBounds="true"
             android:scaleType="fitXY" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dip"
+        android:background="@color/white_alpha"
+        />
 </LinearLayout>

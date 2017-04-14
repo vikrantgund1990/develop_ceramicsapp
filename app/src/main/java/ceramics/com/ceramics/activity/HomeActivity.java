@@ -458,8 +458,9 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
                 if (response.isStatus()){
                     locationDataList = response.getData();
                     if (locationDataList != null && locationDataList.size() > 0){
-                        checkLocationPermission();
-                        checkGPS();
+                        /*checkLocationPermission();
+                        checkGPS();*/
+                        openDashboardFragment();
                     }
                     else {
                         showToast(getString(R.string.error));

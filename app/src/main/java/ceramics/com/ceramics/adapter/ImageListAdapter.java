@@ -26,7 +26,7 @@ public class ImageListAdapter extends ArrayAdapter<String> {
     private BaseActivity activity;
     private ArrayList<String> imageList;
     private LayoutInflater inflater;
-    private String imgageBaseURL = "http://images.ceramicskart.com/img/home/";
+    //private String imgageBaseURL = "http://images.ceramicskart.com/img/home/";
     private ImageLoader imageLoader;
 
     public ImageListAdapter(BaseActivity context,ArrayList<String> imageList) {
@@ -53,7 +53,7 @@ public class ImageListAdapter extends ArrayAdapter<String> {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        holder.ivImage.setImageUrl(imgageBaseURL+imageList.get(position),imageLoader);
+        holder.ivImage.setImageUrl(imageList.get(position),imageLoader);
 
         return convertView;
     }

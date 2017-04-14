@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+
 import java.util.ArrayList;
 
 import ceramics.com.ceramics.R;
@@ -23,11 +28,16 @@ import ceramics.com.ceramics.utils.ApplicationPreferenceData;
 public class DashboardFragment extends BaseFragment implements View.OnClickListener {
 
     private ImageListAdapter imageListAdapter;
+    private LayoutInflater inflater;
+    private SliderLayout sliderLayout;
     private ListView lvImages;
     private BaseActivity activity;
     private ArrayList<String> imageList;
+    private ArrayList<String> productImageList;
     private Fragment wallFragment,floorFragment,productByApplication;
     private TextView tvWall,tvFloor;
+    private String imgageBaseURL = "http://images.ceramicskart.com/img/home/";
+    private String prodctImgageBaseURL = "http://images.ceramicskart.com/application/";
 
     @Nullable
     @Override
@@ -50,18 +60,28 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void initView(View view){
+        inflater = LayoutInflater.from(getActivity());
         lvImages = (ListView)view.findViewById(R.id.image_list);
         tvWall = (TextView)view.findViewById(R.id.text_wall);
         tvFloor = (TextView)view.findViewById(R.id.floor_wall);
-
+        ViewGroup viewGroup = (ViewGroup)inflater.inflate(R.layout.image_header_view,null);
+        lvImages.addHeaderView(viewGroup);
+        sliderLayout = (SliderLayout)viewGroup.findViewById(R.id.slider);
         tvWall.setOnClickListener(this);
         tvFloor.setOnClickListener(this);
 
         addItems();
-        imageListAdapter = new ImageListAdapter(activity,imageList);
+        imageListAdapter = new ImageListAdapter(activity,productImageList);
         lvImages.setAdapter(imageListAdapter);
-
+        initSlider();
         showPromotionCode();
+    }
+
+    private void initSlider(){
+        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+        sliderLayout.setDuration(3000);
     }
 
     private void showPromotionCode(){
@@ -102,6 +122,27 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
         imageList.add("kitchen.jpg");
         imageList.add("Drawing.jpg");
         imageList.add("Bathroom.jpeg");
+        addProductImages();
+
+        for (int i = 0; i < imageList.size(); i++){
+            TextSliderView textSliderView = new TextSliderView(activity);
+            textSliderView
+                    .image(imgageBaseURL+imageList.get(i))
+                    .setScaleType(BaseSliderView.ScaleType.Fit);
+            textSliderView.bundle(new Bundle());
+
+            sliderLayout.addSlider(textSliderView);
+        }
+    }
+
+    private void addProductImages(){
+        productImageList = new ArrayList<>();
+        productImageList.add(prodctImgageBaseURL+"bathroom.jpg");
+        productImageList.add(prodctImgageBaseURL+"bedroom.jpg");
+        productImageList.add(prodctImgageBaseURL+"living_room.jpg");
+        productImageList.add(prodctImgageBaseURL+"kitchen.jpg");
+        productImageList.add(prodctImgageBaseURL+"outdoor.jpg");
+        productImageList.add(prodctImgageBaseURL+"office.jpg");
     }
 
     @Override
