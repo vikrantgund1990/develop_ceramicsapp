@@ -83,7 +83,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
         lvImages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                activity.showToast(position+"");
+                openProductByApplication(position);
             }
         });
     }
@@ -109,12 +109,12 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
 
 
 
-    private void openProductByApplicationFragment(){
+    /*private void openProductByApplicationFragment(){
         if (productByApplication == null) {
             productByApplication = new ProductByApplicationListFragment();
         }
         activity.loadFragment(productByApplication, R.id.base_layout, true);
-    }
+    }*/
 
     private void addItems(){
         imageList = new ArrayList<>();
@@ -144,6 +144,23 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
         productImageList.add(prodctImgageBaseURL+"office.jpg");
         productImageList.add(prodctImgageBaseURL+"outdoor.jpg");
 
+    }
+
+    private void openProductByApplication(int application){
+        switch (application){
+            case BEDROOM:
+                break;
+            case LIVING_ROOM:
+                break;
+            case KITCHEN:
+                break;
+            case BATHROOM:
+                break;
+            case OFFICE:
+                break;
+            case OUTDOOR:
+                break;
+        }
     }
 
     @Override
