@@ -16,7 +16,7 @@ import ceramics.com.ceramics.activity.HomeActivity;
 
 public class LeftSliderFragment extends BaseFragment implements View.OnClickListener{
 
-    private TextView tvWall,tvFloor,tvHome,tvRefer;
+    private TextView tvWall,tvProduct,tvFloor,tvHome,tvRefer;
 
     @Nullable
     @Override
@@ -34,10 +34,10 @@ public class LeftSliderFragment extends BaseFragment implements View.OnClickList
         tvHome = (TextView)view.findViewById(R.id.home);
         tvWall = (TextView)view.findViewById(R.id.wall);
         tvFloor = (TextView)view.findViewById(R.id.floor);
+        tvProduct = (TextView)view.findViewById(R.id.products);
         tvRefer = (TextView)view.findViewById(R.id.refer_user);
 
-        tvWall.setOnClickListener(this);
-        tvFloor.setOnClickListener(this);
+        tvProduct.setOnClickListener(this);
         tvHome.setOnClickListener(this);
         tvRefer.setOnClickListener(this);
     }
@@ -45,9 +45,11 @@ public class LeftSliderFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.wall:
+            case R.id.products:
+                ((HomeActivity)getActivity()).openProductFragment();
                 break;
             case R.id.floor:
+
                 break;
             case R.id.home:
                 break;

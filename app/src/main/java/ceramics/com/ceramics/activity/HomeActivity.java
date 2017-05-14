@@ -55,6 +55,7 @@ import ceramics.com.ceramics.custom.ActionBarListener;
 import ceramics.com.ceramics.custom.CustomActionBar;
 import ceramics.com.ceramics.fragments.DashboardFragment;
 import ceramics.com.ceramics.fragments.FloorFragment;
+import ceramics.com.ceramics.fragments.ProductFragment;
 import ceramics.com.ceramics.fragments.ReferenceCodeDialogFragment;
 import ceramics.com.ceramics.fragments.WallFragment;
 import ceramics.com.ceramics.model.ApplicationDataModel;
@@ -71,7 +72,7 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
     private DrawerLayout drawer_parent;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
-    private Fragment wallFragment, floorFragment, productTypeFragment, dashboardFragment;
+    private Fragment wallFragment, floorFragment, productFragment, dashboardFragment;
     private ReferenceCodeDialogFragment referCodefragment;
     private boolean isHome = true;
     double latitude = 0, longitude = 0;
@@ -85,7 +86,7 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         setContentView(R.layout.activity_home);
         initView();
         ApplicationPreferenceData preferenceData = ApplicationPreferenceData.getInstance(this);
-        callGetCitiesAPI();
+        openDashboardFragment();
         /*Execute below code to get location from preferences*/
         /*if (preferenceData.getApplicationData().getUserLocationData() == null){
             callGetCitiesAPI();
@@ -121,6 +122,30 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
             dashboardFragment = new DashboardFragment();
         }
         loadFragment(dashboardFragment, R.id.base_layout, false);
+        hideSlidingMenu();
+    }
+
+    public void openProductFragment(){
+        if (productFragment == null) {
+            productFragment = new ProductFragment();
+        }
+        loadFragment(productFragment, R.id.base_layout, true);
+        hideSlidingMenu();
+    }
+
+    public void openWallFragment(){
+        if (wallFragment == null) {
+            wallFragment = new WallFragment();
+        }
+        loadFragment(wallFragment, R.id.base_layout, true);
+        hideSlidingMenu();
+    }
+
+    public void openFloorFragment(){
+        if (floorFragment == null) {
+            floorFragment = new FloorFragment();
+        }
+        loadFragment(floorFragment, R.id.base_layout, true);
         hideSlidingMenu();
     }
 
@@ -460,7 +485,6 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
                     if (locationDataList != null && locationDataList.size() > 0){
                         /*checkLocationPermission();
                         checkGPS();*/
-                        openDashboardFragment();
                     }
                     else {
                         showToast(getString(R.string.error));

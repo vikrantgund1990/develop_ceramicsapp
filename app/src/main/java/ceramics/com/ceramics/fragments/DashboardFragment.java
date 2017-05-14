@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,6 +39,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
     private TextView tvWall,tvFloor;
     private String imgageBaseURL = "http://images.ceramicskart.com/img/home/";
     private String prodctImgageBaseURL = "http://images.ceramicskart.com/application/";
+    private final int BEDROOM = 1,LIVING_ROOM = 2,KITCHEN = 3,BATHROOM = 4,OFFICE = 5,OUTDOOR = 6;
 
     @Nullable
     @Override
@@ -64,9 +66,11 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
         lvImages = (ListView)view.findViewById(R.id.image_list);
         tvWall = (TextView)view.findViewById(R.id.text_wall);
         tvFloor = (TextView)view.findViewById(R.id.floor_wall);
-        ViewGroup viewGroup = (ViewGroup)inflater.inflate(R.layout.image_header_view,null);
-        lvImages.addHeaderView(viewGroup);
-        sliderLayout = (SliderLayout)viewGroup.findViewById(R.id.slider);
+        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.image_header_view,null);
+        ViewGroup footer = (ViewGroup)inflater.inflate(R.layout.dashboard_footer,null);
+        lvImages.addHeaderView(header);
+        lvImages.addFooterView(footer);
+        sliderLayout = (SliderLayout)header.findViewById(R.id.slider);
         tvWall.setOnClickListener(this);
         tvFloor.setOnClickListener(this);
 
@@ -75,12 +79,19 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
         lvImages.setAdapter(imageListAdapter);
         initSlider();
         showPromotionCode();
+
+        lvImages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                activity.showToast(position+"");
+            }
+        });
     }
 
     private void initSlider(){
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+    //    sliderLayout.setCustomAnimation(new DescriptionAnimation());
         sliderLayout.setDuration(3000);
     }
 
@@ -96,19 +107,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
         referCodefragment.show(activity.getFragmentManager(), "");
     }
 
-    public void openWallFragment(){
-        if (wallFragment == null) {
-            wallFragment = new WallFragment();
-        }
-        activity.loadFragment(wallFragment, R.id.base_layout, true);
-    }
 
-    public void openFloorFragment(){
-        if (floorFragment == null) {
-            floorFragment = new FloorFragment();
-        }
-        activity.loadFragment(floorFragment, R.id.base_layout, true);
-    }
 
     private void openProductByApplicationFragment(){
         if (productByApplication == null) {
@@ -137,22 +136,24 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
 
     private void addProductImages(){
         productImageList = new ArrayList<>();
-        productImageList.add(prodctImgageBaseURL+"bathroom.jpg");
+
         productImageList.add(prodctImgageBaseURL+"bedroom.jpg");
         productImageList.add(prodctImgageBaseURL+"living_room.jpg");
         productImageList.add(prodctImgageBaseURL+"kitchen.jpg");
-        productImageList.add(prodctImgageBaseURL+"outdoor.jpg");
+        productImageList.add(prodctImgageBaseURL+"bathroom.jpg");
         productImageList.add(prodctImgageBaseURL+"office.jpg");
+        productImageList.add(prodctImgageBaseURL+"outdoor.jpg");
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.text_wall:
-                openWallFragment();
+
                 break;
             case R.id.floor_wall:
-                openFloorFragment();
+
                 break;
         }
     }

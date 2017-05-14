@@ -2,11 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <com.daimajia.slider.library.SliderLayout
         android:id="@+id/slider"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="30dp"
+            >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tile Visualizer"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@color/black_alpha_50"
+            android:padding="10dp"
+            />
+        </LinearLayout>
+            />
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

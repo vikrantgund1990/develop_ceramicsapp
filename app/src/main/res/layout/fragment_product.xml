@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f1f1f1"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_edittext"
+        >
+        <TextView
+            android:id="@+id/text_floor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Floor Tiles"
+            android:textColor="@color/text_color"
+            android:padding="15dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/text_color"
+            />
+        <TextView
+            android:id="@+id/text_wall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wall Tiles"
+            android:textColor="@color/text_color"
+            android:padding="15dp"
+            />
+    </LinearLayout>
+</LinearLayout>
