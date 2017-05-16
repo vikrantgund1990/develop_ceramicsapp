@@ -88,7 +88,7 @@
                 android:background="@color/gray"
                 />
             <TextView
-                android:id="@+id/wall"
+                android:id="@+id/contact_us"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dip"
@@ -103,7 +103,7 @@
                 android:background="@color/gray"
                 />
             <TextView
-                android:id="@+id/floor"
+                android:id="@+id/about_us"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dip"

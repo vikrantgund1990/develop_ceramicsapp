@@ -16,7 +16,7 @@ import ceramics.com.ceramics.activity.HomeActivity;
 
 public class LeftSliderFragment extends BaseFragment implements View.OnClickListener{
 
-    private TextView tvWall,tvProduct,tvFloor,tvHome,tvRefer;
+    private TextView tvVisualiser,tvContactUs,tvAboutUs,tvProduct,tvFloor,tvHome,tvRefer;
 
     @Nullable
     @Override
@@ -32,11 +32,15 @@ public class LeftSliderFragment extends BaseFragment implements View.OnClickList
 
     private void initView(View view){
         tvHome = (TextView)view.findViewById(R.id.home);
-        tvWall = (TextView)view.findViewById(R.id.wall);
-        tvFloor = (TextView)view.findViewById(R.id.floor);
         tvProduct = (TextView)view.findViewById(R.id.products);
         tvRefer = (TextView)view.findViewById(R.id.refer_user);
+        tvVisualiser = (TextView)view.findViewById(R.id.tile_visualiser);
+        tvContactUs = (TextView)view.findViewById(R.id.contact_us);
+        tvAboutUs = (TextView)view.findViewById(R.id.about_us);
 
+        tvVisualiser.setOnClickListener(this);
+        tvContactUs.setOnClickListener(this);
+        tvAboutUs.setOnClickListener(this);
         tvProduct.setOnClickListener(this);
         tvHome.setOnClickListener(this);
         tvRefer.setOnClickListener(this);
@@ -48,10 +52,14 @@ public class LeftSliderFragment extends BaseFragment implements View.OnClickList
             case R.id.products:
                 ((HomeActivity)getActivity()).openProductFragment();
                 break;
-            case R.id.floor:
-
+            case R.id.tile_visualiser:
+                ((HomeActivity)getActivity()).openWebFragment("https://WWW.google.com");
                 break;
-            case R.id.home:
+            case R.id.contact_us:
+                ((HomeActivity)getActivity()).openWebFragment("http://www.tutorialspoint.com");
+                break;
+            case R.id.about_us:
+                ((HomeActivity)getActivity()).openWebFragment("http://qa.ceramicskart.com");
                 break;
             case R.id.refer_user:
                 ((HomeActivity)getActivity()).openReferCodeFragment();

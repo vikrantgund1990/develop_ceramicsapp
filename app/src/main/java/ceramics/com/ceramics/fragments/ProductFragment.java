@@ -34,6 +34,13 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
         initView(getView());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        activity.setActionBarTitle("Products");
+        activity.showBackOption(true);
+    }
+
     private void initView(View v){
         tvFloor = (TextView)v.findViewById(R.id.text_floor);
         tvWall = (TextView)v.findViewById(R.id.text_wall);

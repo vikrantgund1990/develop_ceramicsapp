@@ -34,5 +34,6 @@ public abstract class BaseActivity extends FragmentActivity {
 
     public abstract void setActionBarTitle(String title);
     public abstract void showBackOption(boolean flag);
+    public abstract void openWebFragment(String url);
 }
 

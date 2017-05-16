@@ -58,6 +58,7 @@ import ceramics.com.ceramics.fragments.FloorFragment;
 import ceramics.com.ceramics.fragments.ProductFragment;
 import ceramics.com.ceramics.fragments.ReferenceCodeDialogFragment;
 import ceramics.com.ceramics.fragments.WallFragment;
+import ceramics.com.ceramics.fragments.WebViewFragment;
 import ceramics.com.ceramics.model.ApplicationDataModel;
 import ceramics.com.ceramics.model.UserLocationData;
 import ceramics.com.ceramics.network.APIRequestHelper;
@@ -65,20 +66,21 @@ import ceramics.com.ceramics.network.CommonJsonArrayModel;
 import ceramics.com.ceramics.utils.ApplicationPreferenceData;
 import ceramics.com.ceramics.utils.GPSTracker;
 
-public class HomeActivity extends BaseActivity implements ActionBarListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class HomeActivity extends BaseActivity implements ActionBarListener {
 
     private CustomActionBar actionBar;
     private ListView lvLocation;
     private DrawerLayout drawer_parent;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
-    private Fragment wallFragment, floorFragment, productFragment, dashboardFragment;
+    private Fragment wallFragment, floorFragment, productFragment, dashboardFragment,webFragment;
     private ReferenceCodeDialogFragment referCodefragment;
     private boolean isHome = true;
     double latitude = 0, longitude = 0;
     private ArrayList<UserLocationData> locationDataList;
     private LocationListAdapter locationListAdapter;
     private LinearLayout llProgress;
+    private IGPSListner gpsListner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,13 +109,6 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         lvLocation = (ListView) findViewById(R.id.list_location);
         llProgress = (LinearLayout)findViewById(R.id.progress_layout);
         actionBar.setActionBarListner(this);
-
-        lvLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setUserLocation(locationListAdapter.getItem(position));
-            }
-        });
     }
 
     public void openDashboardFragment() {
@@ -157,6 +152,10 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
         hideSlidingMenu();
     }
 
+    public void setGpsListner(IGPSListner gpsListner){
+        this.gpsListner = gpsListner;
+    }
+
     private void callGetCitiesAPI() {
         try {
             Type responseModelType = new TypeToken<CommonJsonArrayModel<UserLocationData>>() {
@@ -165,36 +164,6 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
             APIRequestHelper.getCities(responseModelType, new JSONObject(), getCities, getCities, this);
         } catch (Exception e) {
             showToast(getString(R.string.error));
-        }
-    }
-
-    private boolean checkLocationPermission() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1001);
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 1001:
-                if (grantResults.length > 0 && grantResults[0] == 0) {
-                    checkGPS();
-                } else {
-                    updateRegion(true);
-                }
         }
     }
 
@@ -210,6 +179,19 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
     @Override
     public void showBackOption(boolean flag) {
         actionBar.showBackOption(flag);
+    }
+
+    @Override
+    public void openWebFragment(String url) {
+        if (webFragment == null) {
+            webFragment = new WebViewFragment();
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString("URL",url);
+        webFragment.setArguments(bundle);
+        loadFragment(webFragment, R.id.base_layout, true);
+        hideSlidingMenu();
     }
 
     @Override
@@ -242,233 +224,12 @@ public class HomeActivity extends BaseActivity implements ActionBarListener, Loc
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                googleApiClient);
-        if (mLastLocation != null) {
-            latitude = mLastLocation.getLatitude();
-            longitude = mLastLocation.getLongitude();
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        showToast("Failed to get your location");
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        showToast("Failed to get your location");
-    }
-
-    public void checkGPS() {
-
-        try {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                //ActivityCompat.requestPermissions(this,new String[]{ Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},1001);
-                // return;
-            }
-
-
-            if (googleApiClient == null) {
-                googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this)
-                        .addApi(LocationServices.API)
-                        .addConnectionCallbacks(this)
-                        .addOnConnectionFailedListener(this).build();
-            }
-
-            googleApiClient.connect();
-            locationRequest = LocationRequest.create();
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            locationRequest.setInterval(5 * 1000);
-            locationRequest.setFastestInterval(1 * 1000);
-            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                    .addLocationRequest(locationRequest);
-
-            //**************************
-            builder.setAlwaysShow(true); //this is the key ingredient
-            //**************************
-
-            PendingResult<LocationSettingsResult> result =
-                    LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
-            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-                @Override
-                public void onResult(LocationSettingsResult result) {
-                    final Status status = result.getStatus();
-                    final LocationSettingsStates state = result.getLocationSettingsStates();
-                    switch (status.getStatusCode()) {
-                        case LocationSettingsStatusCodes.SUCCESS:
-                            // All location settings are satisfied. The client can initialize location
-                            // requests here.
-                            startLocationUpdates();
-                            break;
-                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                            // Location settings are not satisfied. But could be fixed by showing the user
-                            // a dialog.
-                            // Show the dialog by calling startResolutionForResult(),
-                            // and check the result in onActivityResult().
-                            try {
-                                status.startResolutionForResult(HomeActivity.this, 1000);
-                            } catch (IntentSender.SendIntentException e) {
-                                e.printStackTrace();
-                            }
-                            // Ignore the error.
-                            break;
-                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                            // Location settings are not satisfied. However, we have no way to fix the
-                            // settings so we won't show the dialog.
-                            break;
-                    }
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000) {
-            if (resultCode == -1) {
-                updateRegion(false);
-            } else {
-                /*TODO: call location API and show location in list*/
-                updateRegion(true);
-            }
-        }
+        if (gpsListner != null)
+            gpsListner.onGPSEnable(resultCode,requestCode);
     }
 
-    private void updateRegion(boolean showList) {
-        if (showList) {
-            showLocationList(true);
-        } else {
-            List<Address> addresses = getLocationFromLatLon();
-            if (addresses != null) {
-                UserLocationData data = new UserLocationData();
-                data.setName(addresses.get(0).getLocality());
-                setUserLocation(data);
-                /*for (UserLocationData data : locationDataList){
-                    if (data.getName().equalsIgnoreCase(addresses.get(0).getLocality())){
-                        setUserLocation(data);
-                    }
-                }*/
-            } else {
-                showLocationList(true);
-            }
-        }
-    }
-
-    private void setUserLocation(UserLocationData userLocation) {
-        ApplicationPreferenceData preferenceData = ApplicationPreferenceData.getInstance(this);
-        ApplicationDataModel applicationDataModel = preferenceData.getApplicationData();
-        applicationDataModel.setUserLocationData(userLocation);
-        preferenceData.setApplicationData(applicationDataModel);
-        showToast("Hello! You are in" + userLocation.getName());
-        showLocationList(false);
-        openDashboardFragment();
-    }
-
-    private void showLocationList(boolean flag) {
-        if (flag) {
-            lvLocation.setVisibility(View.VISIBLE);
-            if (locationListAdapter == null) {
-                locationListAdapter = new LocationListAdapter(this, locationDataList);
-            }
-            lvLocation.setAdapter(locationListAdapter);
-        } else {
-            lvLocation.setVisibility(View.GONE);
-        }
-    }
-
-    private List<Address> getLocationFromLatLon() {
-        List<Address> addresses = null;
-        try {
-            llProgress.setVisibility(View.VISIBLE);
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            while (latitude == 0 && longitude == 0) {
-                if (googleApiClient != null && googleApiClient.isConnected()) {
-
-                    GPSTracker gpsTracker = new GPSTracker(this);
-                    latitude = gpsTracker.getLatitude();
-                    longitude = gpsTracker.getLongitude();
-
-                    if (latitude == 0 && longitude == 0) {
-                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            // TODO: Consider calling
-                            //    ActivityCompat#requestPermissions
-                            // here to request the missing permissions, and then overriding
-                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                            //                                          int[] grantResults)
-                            // to handle the case where the user grants the permission. See the documentation
-                            // for ActivityCompat#requestPermissions for more details.
-                        }
-                        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                                googleApiClient);
-                        if (mLastLocation != null) {
-                            latitude = mLastLocation.getLatitude();
-                            longitude = mLastLocation.getLongitude();
-                        }
-                    }
-                }
-            }
-            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5    if()
-            llProgress.setVisibility(View.GONE);
-
-        } catch (Exception e) {
-            showToast("Sorry! Unable to fetch your location.");
-        }
-
-        return addresses;
-    }
-
-    protected void startLocationUpdates() {
-        try {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                //ActivityCompat.requestPermissions(activity,new String[]{ Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},1001);
-                return;
-            }
-            if (googleApiClient != null && googleApiClient.isConnected()) {
-                LocationServices.FusedLocationApi.requestLocationUpdates(
-                        googleApiClient, locationRequest, this);
-            }
-            updateRegion(false);
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-
-
-    }
 
     class GetCities implements Response.Listener<CommonJsonArrayModel<UserLocationData>>,Response.ErrorListener{
 
