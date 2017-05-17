@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -16,9 +17,11 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import ceramics.com.ceramics.R;
 import ceramics.com.ceramics.activity.BaseActivity;
+import ceramics.com.ceramics.adapter.ProductListGridAdapater;
 import ceramics.com.ceramics.model.ProductDetails;
 import ceramics.com.ceramics.network.APIRequestHelper;
 import ceramics.com.ceramics.network.CommonJsonArrayModel;
@@ -31,10 +34,10 @@ import ceramics.com.ceramics.utils.Utils;
 
 public class ProductByApplicationListFragment extends BaseFragment implements View.OnClickListener{
 
-    private FrameLayout flKitchen,flBathroom,flLivingRoom,flBedroom,flOffice,flOutdoor;
     private BaseActivity activity;
-    private NetworkImageView ivBathroom,ivBedroom,ivLivingRoom,ivKitchen,ivOutdoor,ivOffice;
-    private String imgageBaseURL = "http://images.ceramicskart.com/application/";
+    private GridView gvProductList;
+    private ProductListGridAdapater productListGridAdapater;
+    private ArrayList<ProductDetails> productList;
 
     @Nullable
     @Override
@@ -47,70 +50,27 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity)getActivity();
         initView(getView());
-        setImage();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         activity.setActionBarTitle("Product by Application");
+        activity.showBackOption(true);
     }
 
     private void initView(View view){
-        flKitchen = (FrameLayout)view.findViewById(R.id.kitchen);
-        flBathroom = (FrameLayout)view.findViewById(R.id.bathroom);
-        flLivingRoom = (FrameLayout)view.findViewById(R.id.living_room);
-        flBedroom = (FrameLayout)view.findViewById(R.id.bedroom);
-        flOffice = (FrameLayout)view.findViewById(R.id.office);
-        flOutdoor = (FrameLayout)view.findViewById(R.id.outdoor);
-
-        ivBathroom = (NetworkImageView)view.findViewById(R.id.image_bathroom);
-        ivBedroom = (NetworkImageView)view.findViewById(R.id.image_bedroom);
-        ivLivingRoom = (NetworkImageView)view.findViewById(R.id.image_living_room);
-        ivKitchen = (NetworkImageView)view.findViewById(R.id.image_kitchen);
-        ivOutdoor = (NetworkImageView)view.findViewById(R.id.image_outdoor);
-        ivOffice = (NetworkImageView)view.findViewById(R.id.image_office);
-
-        flKitchen.setOnClickListener(this);
-        flLivingRoom.setOnClickListener(this);
-        flBathroom.setOnClickListener(this);
-        flBedroom.setOnClickListener(this);
-        flOffice.setOnClickListener(this);
-        flOutdoor.setOnClickListener(this);
-    }
-
-    private void setImage(){
-        ImageLoader imageLoader = CeramicsApplication.getInstance().getImageLoader();
-        ivBathroom.setImageUrl(imgageBaseURL+"bathroom.jpg",imageLoader);
-        ivBedroom.setImageUrl(imgageBaseURL+"bedroom.jpg",imageLoader);
-        ivLivingRoom.setImageUrl(imgageBaseURL+"living_room.jpg",imageLoader);
-        ivKitchen.setImageUrl(imgageBaseURL+"kitchen.jpg",imageLoader);
-        ivOutdoor.setImageUrl(imgageBaseURL+"outdoor.jpg",imageLoader);
-        ivOffice.setImageUrl(imgageBaseURL+"office.jpg",imageLoader);
+        gvProductList = (GridView)view.findViewById(R.id.grid_products);
+        Bundle bundle = getArguments();
+        productList = (ArrayList<ProductDetails>) bundle.getSerializable("ProductList");
+        productListGridAdapater = new ProductListGridAdapater(activity,productList);
+        gvProductList.setAdapter(productListGridAdapater);
     }
 
     @Override
     public void onClick(View v) {
         if (Utils.isNetworkConnected(activity)){
             switch (v.getId()){
-                case R.id.kitchen:
-                    getKitchen();
-                    break;
-                case R.id.living_room:
-                    getLivingRoom();
-                    break;
-                case R.id.bathroom:
-                    getBathroom();
-                    break;
-                case R.id.bedroom:
-                    getBedroom();
-                    break;
-                case R.id.office:
-                    getOffice();
-                    break;
-                case R.id.outdoor:
-                    getOutdoor();
-                    break;
             }
         }
         else {
@@ -118,103 +78,4 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
         }
     }
 
-    private void getKitchen(){
-        try {
-            Type responseModelType = new TypeToken<CommonJsonArrayModel<ProductDetails>>() {
-            }.getType();
-            GetKitchen kitchen = new GetKitchen();
-            APIRequestHelper.kitchen(responseModelType, new JSONObject(), kitchen, kitchen, activity);
-        }
-        catch (Exception e){
-            activity.showToast(e.getMessage());
-        }
-    }
-
-    private void getBathroom(){
-        try {
-            Type responseModelType = new TypeToken<CommonJsonArrayModel<ProductDetails>>() {
-            }.getType();
-            GetKitchen kitchen = new GetKitchen();
-            APIRequestHelper.kitchen(responseModelType, new JSONObject(), kitchen, kitchen, activity);
-        }
-        catch (Exception e){
-            activity.showToast(e.getMessage());
-        }
-    }
-
-    private void getLivingRoom(){
-        try {
-            Type responseModelType = new TypeToken<CommonJsonArrayModel<ProductDetails>>() {
-            }.getType();
-            GetKitchen kitchen = new GetKitchen();
-            APIRequestHelper.livingroom(responseModelType, new JSONObject(), kitchen, kitchen, activity);
-        }
-        catch (Exception e){
-            activity.showToast(e.getMessage());
-        }
-    }
-
-    private void getBedroom(){
-        try {
-            Type responseModelType = new TypeToken<CommonJsonArrayModel<ProductDetails>>() {
-            }.getType();
-            GetKitchen kitchen = new GetKitchen();
-            APIRequestHelper.bedroom(responseModelType, new JSONObject(), kitchen, kitchen, activity);
-        }
-        catch (Exception e){
-            activity.showToast(e.getMessage());
-        }
-    }
-
-    private void getOffice(){
-        try {
-            Type responseModelType = new TypeToken<CommonJsonArrayModel<ProductDetails>>() {
-            }.getType();
-            GetKitchen kitchen = new GetKitchen();
-            APIRequestHelper.office(responseModelType, new JSONObject(), kitchen, kitchen, activity);
-        }
-        catch (Exception e){
-            activity.showToast(e.getMessage());
-        }
-    }
-
-    private void getOutdoor(){
-        try {
-            Type responseModelType = new TypeToken<CommonJsonArrayModel<ProductDetails>>() {
-            }.getType();
-            GetKitchen kitchen = new GetKitchen();
-            APIRequestHelper.outdoor(responseModelType, new JSONObject(), kitchen, kitchen, activity);
-        }
-        catch (Exception e){
-            activity.showToast(e.getMessage());
-        }
-    }
-
-    class GetKitchen implements Response.Listener<CommonJsonArrayModel<ProductDetails>>,Response.ErrorListener{
-
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            activity.showToast(error.getMessage());
-        }
-
-        @Override
-        public void onResponse(CommonJsonArrayModel<ProductDetails> response) {
-            try{
-                if (response.isStatus() == true){
-                    if (response.getData() != null && response.getData().size() > 0){
-
-                    }
-                    else {
-                        activity.showToast(getString(R.string.product_not_available));
-                    }
-                }
-                else {
-                    activity.showToast(response.getMessage());
-                }
-            }
-            catch (Exception e){
-                activity.showToast(e.getMessage());
-            }
-        }
-    }
 }

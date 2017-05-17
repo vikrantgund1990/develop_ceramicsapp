@@ -53,13 +53,13 @@ public class LeftSliderFragment extends BaseFragment implements View.OnClickList
                 ((HomeActivity)getActivity()).openProductFragment();
                 break;
             case R.id.tile_visualiser:
-                ((HomeActivity)getActivity()).openWebFragment("https://WWW.google.com");
+                ((HomeActivity)getActivity()).openWebFragment(getString(R.string.tile_visualiser));
                 break;
             case R.id.contact_us:
-                ((HomeActivity)getActivity()).openWebFragment("http://www.tutorialspoint.com");
+                ((HomeActivity)getActivity()).openWebFragment(getString(R.string.contact_us));
                 break;
             case R.id.about_us:
-                ((HomeActivity)getActivity()).openWebFragment("http://qa.ceramicskart.com");
+                ((HomeActivity)getActivity()).openWebFragment(getString(R.string.about_us));
                 break;
             case R.id.refer_user:
                 ((HomeActivity)getActivity()).openReferCodeFragment();

@@ -18,5 +18,6 @@
         android:text="OK"
         android:layout_alignParentBottom="true"
         style="@style/NormalButton"
+        android:visibility="gone"
         />
 </RelativeLayout>

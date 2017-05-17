@@ -37,7 +37,11 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import ceramics.com.ceramics.R;
@@ -45,7 +49,12 @@ import ceramics.com.ceramics.activity.BaseActivity;
 import ceramics.com.ceramics.activity.HomeActivity;
 import ceramics.com.ceramics.activity.IGPSListner;
 import ceramics.com.ceramics.adapter.ImageListAdapter;
+import ceramics.com.ceramics.helper.GetProductListDataHelper;
+import ceramics.com.ceramics.helper.ProductListDataListner;
+import ceramics.com.ceramics.model.ProductDetails;
 import ceramics.com.ceramics.model.UserLocationData;
+import ceramics.com.ceramics.network.APIRequestHelper;
+import ceramics.com.ceramics.network.CommonJsonArrayModel;
 import ceramics.com.ceramics.utils.ApplicationPreferenceData;
 import ceramics.com.ceramics.utils.Utils;
 
@@ -53,7 +62,7 @@ import ceramics.com.ceramics.utils.Utils;
  * Created by vikrantg on 16-03-2017.
  */
 
-public class DashboardFragment extends BaseFragment implements View.OnClickListener,LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,IGPSListner {
+public class DashboardFragment extends BaseFragment implements View.OnClickListener,LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,IGPSListner,ProductListDataListner {
 
     private ImageListAdapter imageListAdapter;
     private LayoutInflater inflater;
@@ -65,6 +74,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private ProgressDialog progressDialog;
+    private TextView tvTileVisualiser,tvTileCalculator,tvContactUs,tvAboutUs,tvEvents;
     private Fragment wallFragment,floorFragment,productByApplication;
     private TextView tvWall,tvFloor;
     private String imgageBaseURL = "http://images.ceramicskart.com/img/home/";
@@ -103,8 +113,17 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
         lvImages.addHeaderView(header);
         lvImages.addFooterView(footer);
         sliderLayout = (SliderLayout)header.findViewById(R.id.slider);
-        tvWall.setOnClickListener(this);
-        tvFloor.setOnClickListener(this);
+        tvTileVisualiser = (TextView)header.findViewById(R.id.text_visualizer);
+        tvTileCalculator = (TextView)footer.findViewById(R.id.text_calculator);
+        tvContactUs = (TextView)footer.findViewById(R.id.text_contact_us);
+        tvAboutUs = (TextView)footer.findViewById(R.id.text_about_us);
+        tvEvents = (TextView)footer.findViewById(R.id.text_events);
+
+        tvTileVisualiser.setOnClickListener(this);
+        tvTileCalculator.setOnClickListener(this);
+        tvContactUs.setOnClickListener(this);
+        tvAboutUs.setOnClickListener(this);
+        tvEvents.setOnClickListener(this);
 
         addItems();
         imageListAdapter = new ImageListAdapter(activity,productImageList);
@@ -183,7 +202,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
 
     }
 
-    private void openProductByApplication(int application){
+    /*private void openProductByApplication(int application){
         switch (application){
             case BEDROOM:
                 activity.showToast("Bed");
@@ -201,18 +220,82 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
             case OUTDOOR:
                 break;
         }
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.text_wall:
+            case R.id.text_visualizer:
+                (activity).openWebFragment(getString(R.string.tile_visualiser));
+                break;
+            case R.id.text_calculator:
 
                 break;
-            case R.id.floor_wall:
+            case R.id.text_contact_us:
+                (activity).openWebFragment(getString(R.string.contact_us));
+                break;
+            case R.id.text_about_us:
+                (activity).openWebFragment(getString(R.string.about_us));
+                break;
+            case R.id.text_events:
 
                 break;
         }
+    }
+
+    private void getApplicationProductDetails(int product) {
+        try {
+            Type responseModelType = new TypeToken<CommonJsonArrayModel<ProductDetails>>() {
+            }.getType();
+            GetProductListDataHelper dataHelper = new GetProductListDataHelper(this);
+            switch (product){
+                case BEDROOM:
+                    APIRequestHelper.bedroom(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
+                    break;
+                case LIVING_ROOM:
+                    APIRequestHelper.livingroom(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
+                    break;
+                case KITCHEN:
+                    APIRequestHelper.kitchen(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
+                    break;
+                case BATHROOM:
+                    APIRequestHelper.bathroom(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
+                    break;
+                case OFFICE:
+                    APIRequestHelper.office(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
+                    break;
+                case OUTDOOR:
+                    APIRequestHelper.outdoor(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
+                    break;
+            }
+
+        } catch (Exception e) {
+            activity.showToast(e.getMessage());
+        }
+
+    }
+
+    @Override
+    public void onSuccess(ArrayList<ProductDetails> productDetailsArrayList) {
+        if (productDetailsArrayList != null && productDetailsArrayList.size() > 0){
+            openProductByApplicationListFragment(productDetailsArrayList);
+        }
+        else {
+            activity.showToast(getString(R.string.product_not_available));
+        }
+    }
+
+    private void openProductByApplicationListFragment(ArrayList<ProductDetails> list){
+        ProductByApplicationListFragment fragment = new ProductByApplicationListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("ProductList",list);
+        fragment.setArguments(bundle);
+        activity.loadFragment(fragment,R.id.base_layout,true);
+    }
+
+    @Override
+    public void onFailed(String errorMessage) {
+        activity.showToast(getString(R.string.error));
     }
 
     public void checkGPS() {
@@ -353,7 +436,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
             UserLocationData data = new UserLocationData();
             data.setName(Utils.getLocationFromLatLon(activity,location.getLatitude(),location.getLongitude()));
             Utils.setUserLocation(activity,data);
-            openProductByApplication(selectedApplication);
+            getApplicationProductDetails(selectedApplication);
         }
     }
 
@@ -375,4 +458,5 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
                 break;
         }
     }
+
 }

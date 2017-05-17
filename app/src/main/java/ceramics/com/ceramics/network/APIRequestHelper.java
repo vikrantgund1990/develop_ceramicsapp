@@ -131,32 +131,32 @@ public class APIRequestHelper {
 
 	public static <T> void kitchen(Type clazz, JSONObject queryParams, Listener<T> listener,
 									   ErrorListener errorListener, Activity activity) {
-		userGetRequest("/Product/Category/Kitchen", clazz, queryParams, listener, errorListener, activity);
+		userGetRequest("/Product/Category/Kitchen/"+Utils.getUserLocation((BaseActivity)activity), clazz, queryParams, listener, errorListener, activity);
 	}
 
 	public static <T> void bathroom(Type clazz, JSONObject queryParams, Listener<T> listener,
 								   ErrorListener errorListener, Activity activity) {
-		userGetRequest("/Product/Category/Bathroom", clazz, queryParams, listener, errorListener, activity);
+		userGetRequest("/Product/Category/Bathroom/"+Utils.getUserLocation((BaseActivity)activity), clazz, queryParams, listener, errorListener, activity);
 	}
 
 	public static <T> void bedroom(Type clazz, JSONObject queryParams, Listener<T> listener,
 								   ErrorListener errorListener, Activity activity) {
-		userGetRequest("/Product/Category/Bedroom", clazz, queryParams, listener, errorListener, activity);
+		userGetRequest("/Product/Category/Bedroom/"+Utils.getUserLocation((BaseActivity)activity), clazz, queryParams, listener, errorListener, activity);
 	}
 
 	public static <T> void livingroom(Type clazz, JSONObject queryParams, Listener<T> listener,
 								   ErrorListener errorListener, Activity activity) {
-		userGetRequest("/Product/Category/livingroom", clazz, queryParams, listener, errorListener, activity);
+		userGetRequest("/Product/Category/livingroom/"+Utils.getUserLocation((BaseActivity)activity), clazz, queryParams, listener, errorListener, activity);
 	}
 
 	public static <T> void office(Type clazz, JSONObject queryParams, Listener<T> listener,
 								   ErrorListener errorListener, Activity activity) {
-		userGetRequest("/Product/Category/office", clazz, queryParams, listener, errorListener, activity);
+		userGetRequest("/Product/Category/office/"+Utils.getUserLocation((BaseActivity)activity), clazz, queryParams, listener, errorListener, activity);
 	}
 
 	public static <T> void outdoor(Type clazz, JSONObject queryParams, Listener<T> listener,
 								   ErrorListener errorListener, Activity activity) {
-		userGetRequest("/Product/Category/outdoor", clazz, queryParams, listener, errorListener, activity);
+		userGetRequest("/Product/Category/outdoor/"+Utils.getUserLocation((BaseActivity)activity), clazz, queryParams, listener, errorListener, activity);
 	}
 
 	public static <T> void getWall(Type clazz, JSONObject queryParams, Listener<T> listener,

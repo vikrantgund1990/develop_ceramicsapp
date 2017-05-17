@@ -16,6 +16,7 @@
             android:paddingRight="@dimen/fifteen_dp"
             >
             <TextView
+                android:id="@+id/text_calculator"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -29,6 +30,7 @@
                 android:background="@drawable/rounded_edittext"
                 />
             <TextView
+                android:id="@+id/text_contact_us"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -51,6 +53,7 @@
             android:paddingRight="@dimen/fifteen_dp"
             >
             <TextView
+                android:id="@+id/text_about_us"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -64,6 +67,7 @@
                 android:background="@drawable/rounded_edittext"
                 />
             <TextView
+                android:id="@+id/text_events"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
