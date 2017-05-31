@@ -45,6 +45,7 @@ public class WebViewFragment extends BaseFragment {
         webView.loadUrl(url);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setBuiltInZoomControls(true);
         webView.setWebViewClient(new MyBrowser());
     }
 

@@ -15,7 +15,7 @@
     <string name="error">Sorry! Unable to process your request. Please try again later.</string>
 
     <string name="tile_visualiser">"https://WWW.google.com"</string>
-    <string name="about_us">"https://WWW.google.com"</string>
+    <string name="about_us">http://images.ceramicskart.com/img/3001.jpg</string>
     <string name="contact_us">"https://WWW.google.com"</string>
 
 </resources>

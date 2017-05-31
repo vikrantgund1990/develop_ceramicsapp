@@ -11,6 +11,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import ceramics.com.ceramics.R;
+import ceramics.com.ceramics.activity.BaseActivity;
 import ceramics.com.ceramics.model.ProductDetails;
 import ceramics.com.ceramics.utils.AppConstants;
 import ceramics.com.ceramics.utils.CeramicsApplication;
@@ -19,8 +20,9 @@ import ceramics.com.ceramics.utils.CeramicsApplication;
  * Created by vikrantg on 11-03-2017.
  */
 
-public class ProductDetailsFragment extends BaseFragment {
+public class ProductDetailsFragment extends BaseFragment implements View.OnClickListener{
 
+    private BaseActivity activity;
     private TextView tvProduct,tvSize,tvCost;
     private NetworkImageView ivProductImage;
     private String imgageBaseURL = "http://images.ceramicskart.com/img/";
@@ -36,6 +38,7 @@ public class ProductDetailsFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        activity = (BaseActivity)getActivity();
         initView(getView());
     }
 
@@ -46,6 +49,8 @@ public class ProductDetailsFragment extends BaseFragment {
         ivProductImage = (NetworkImageView)view.findViewById(R.id.product_image);
         ivProductImage.setDefaultImageResId(R.mipmap.merchandise_stub_image);
 
+        ivProductImage.setOnClickListener(this);
+
         imageLoader = CeramicsApplication.getInstance().getImageLoader();
         productDetails = (ProductDetails) getArguments().getSerializable(AppConstants.PRODUCT_DETAILS);
         if (productDetails != null){
@@ -54,5 +59,22 @@ public class ProductDetailsFragment extends BaseFragment {
             tvSize.setText(productDetails.getWidthInCM()+" Cm");
             tvCost.setText(productDetails.getCost()+" INR");
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.product_image:
+                openImageDialog();
+                break;
+        }
+    }
+
+    private void openImageDialog(){
+        WebViewFragment webViewFragment = new WebViewFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("URL",imgageBaseURL+productDetails.getManufacturerProductId()+".jpg");
+        webViewFragment.setArguments(bundle);
+        activity.loadFragment(webViewFragment,R.id.base_layout, true);
     }
 }
