@@ -229,7 +229,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
                 (activity).openWebFragment(getString(R.string.tile_visualiser));
                 break;
             case R.id.text_calculator:
-
+                openTileCalculator();
                 break;
             case R.id.text_contact_us:
                 (activity).openWebFragment(getString(R.string.contact_us));
@@ -241,6 +241,11 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
 
                 break;
         }
+    }
+
+    private void openTileCalculator(){
+        TileCalculatorFragment tileCalculatorFragment = new TileCalculatorFragment();
+        tileCalculatorFragment.show(getFragmentManager(),"");
     }
 
     private void getApplicationProductDetails(int product) {
