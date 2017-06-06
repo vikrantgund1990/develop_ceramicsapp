@@ -10,6 +10,7 @@
     <color name="black">#000000</color>
     <color name="black_alpha_50">#80000000</color>
     <color name="black_alpha_80">#CC000000</color>
+    <color name="blue_alpha_50">#993F51B5</color>
 
     <color name="app_color_alpha_50">#A6FFFFFF</color>
     <color name="app_color">#F1F1F1</color>
