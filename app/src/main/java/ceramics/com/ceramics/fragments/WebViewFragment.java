@@ -1,10 +1,17 @@
 package ceramics.com.ceramics.fragments;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -21,6 +28,7 @@ public class WebViewFragment extends BaseFragment {
     private BaseActivity activity;
     private WebView webView;
     private Button btnOK;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -45,7 +53,10 @@ public class WebViewFragment extends BaseFragment {
         webView.loadUrl(url);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setBuiltInZoomControls(true);
+    //    webView.getSettings().setBuiltInZoomControls(true);
+    //    webView.getSettings().setSupportMultipleWindows(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
         webView.setWebViewClient(new MyBrowser());
     }
 
@@ -56,11 +67,40 @@ public class WebViewFragment extends BaseFragment {
         activity.showBackOption(true);
     }
 
+    /*private int getScale(){
+        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int width = display.getWidth();
+        Double val = new Double(width)/new Double(PIC_WIDTH);
+        val = val * 100d;
+        return val.intValue();
+    }*/
+
     private class MyBrowser extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            if (progressDialog == null) {
+                progressDialog = ProgressDialog.show(activity, " ", "");
+                progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                progressDialog.getWindow().setGravity(Gravity.CENTER);
+                progressDialog.setContentView(R.layout.custome_progress_bar);
+                progressDialog.show();
+            }
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+                progressDialog = null;
+            }
         }
     }
 }

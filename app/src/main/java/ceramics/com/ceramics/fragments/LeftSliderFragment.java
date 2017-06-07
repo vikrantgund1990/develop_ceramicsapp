@@ -53,7 +53,7 @@ public class LeftSliderFragment extends BaseFragment implements View.OnClickList
                 ((HomeActivity)getActivity()).openProductFragment();
                 break;
             case R.id.tile_visualiser:
-                ((HomeActivity)getActivity()).openWebFragment(getString(R.string.tile_visualiser));
+                ((HomeActivity)getActivity()).openTileVisualizer();
                 break;
             case R.id.contact_us:
                 ((HomeActivity)getActivity()).openWebFragment(getString(R.string.contact_us));

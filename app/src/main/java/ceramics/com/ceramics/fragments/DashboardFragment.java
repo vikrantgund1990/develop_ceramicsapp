@@ -48,6 +48,7 @@ import ceramics.com.ceramics.R;
 import ceramics.com.ceramics.activity.BaseActivity;
 import ceramics.com.ceramics.activity.HomeActivity;
 import ceramics.com.ceramics.activity.IGPSListner;
+import ceramics.com.ceramics.activity.TileVisualizerActivity;
 import ceramics.com.ceramics.adapter.ImageListAdapter;
 import ceramics.com.ceramics.helper.GetProductListDataHelper;
 import ceramics.com.ceramics.helper.ProductListDataListner;
@@ -226,7 +227,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.text_visualizer:
-                (activity).openWebFragment(getString(R.string.tile_visualiser));
+                activity.openTileVisualizer();
                 break;
             case R.id.text_calculator:
                 openTileCalculator();
