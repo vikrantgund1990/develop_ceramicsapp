@@ -24,7 +24,8 @@ import ceramics.com.ceramics.utils.Utils;
  */
 public class APIRequestHelper {
 
-	public static final String BASE_URL = "http://qa.ceramicskart.com/api";
+	/*public static final String BASE_URL = "http://qa.ceramicskart.com/api";*/
+	public static final String BASE_URL = "http://dev.ceramicskart.com/api";
 
 	public static String requestType;
 	public static Type clazz;
@@ -172,6 +173,11 @@ public class APIRequestHelper {
 	public static <T> void getCities(Type clazz, JSONObject queryParams, Listener<T> listener,
 									ErrorListener errorListener, Activity activity) {
 		userGetRequest("/getcities", clazz, queryParams, listener, errorListener, activity);
+	}
+
+	public static <T> void getFilter(Type clazz, JSONObject queryParams, Listener<T> listener,
+									 ErrorListener errorListener, Activity activity) {
+		userGetRequest("/filters", clazz, queryParams, listener, errorListener, activity);
 	}
 
 	public static <T> void subscribeGoal(Type clazz, JSONObject queryParams, Listener<T> listener,

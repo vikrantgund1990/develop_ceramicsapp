@@ -11,10 +11,10 @@ public class AppConstants {
     public static final String UNSUBSCRIBED = "UNSUBSCRIBED";
     public static final String ACHIEVED = "PROGRESS_RECORDED";
 
-    public static final int SUCCESS_RESPONSE = 0;
-    public static final int GOAL_LIST_EMPTY = 108;
-    public static final int GOAL_NOT_SUBSCRIBED = 109;
-    public static final int GOAL_ALREADY_COMPLETED = 110;
+    public static final int SIZE = 2;
+    public static final int COLOR = 1;
+    public static final int FINISHING_TYPE = 3;
+    public static final int APPLICATION = 4;
     public static final int TEAM_GOAL_EXISTS = 111;
     public static final int TEAM_GOAL_NOT_EXISTS = 112;
 
