@@ -13,6 +13,7 @@ public class ProductDetails implements Serializable {
     private String description01;
     private String description02;
     private String description03;
+    private String finishType;
     private int manufacturerId;
     private String productType;
     private String productCategory;
@@ -45,6 +46,23 @@ public class ProductDetails implements Serializable {
     private String createdOn;
     private String updatedOn;
     private String manufacturer;
+    private ProductColor productColour;
+
+    public String getFinishType() {
+        return finishType;
+    }
+
+    public void setFinishType(String finishType) {
+        this.finishType = finishType;
+    }
+
+    public ProductColor getProductColour() {
+        return productColour;
+    }
+
+    public void setProductColour(ProductColor productColour) {
+        this.productColour = productColour;
+    }
 
     public int getProductId() {
         return productId;

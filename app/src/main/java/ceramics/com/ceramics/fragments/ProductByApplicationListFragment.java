@@ -5,15 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
@@ -23,9 +19,12 @@ import java.util.ArrayList;
 
 import ceramics.com.ceramics.R;
 import ceramics.com.ceramics.activity.BaseActivity;
-import ceramics.com.ceramics.adapter.FilterAdapter;
 import ceramics.com.ceramics.adapter.ProductListGridAdapater;
 import ceramics.com.ceramics.custom.ListPopupWindow;
+import ceramics.com.ceramics.filter.AndCriteria;
+import ceramics.com.ceramics.filter.ColorCriteria;
+import ceramics.com.ceramics.filter.FinishingTypeCriteria;
+import ceramics.com.ceramics.filter.SizeCriteria;
 import ceramics.com.ceramics.helper.GetFilter;
 import ceramics.com.ceramics.helper.IFilter;
 import ceramics.com.ceramics.model.Filter;
@@ -33,7 +32,6 @@ import ceramics.com.ceramics.model.ProductDetails;
 import ceramics.com.ceramics.network.APIRequestHelper;
 import ceramics.com.ceramics.network.CommonJsonArrayModel;
 import ceramics.com.ceramics.utils.AppConstants;
-import ceramics.com.ceramics.utils.CeramicsApplication;
 import ceramics.com.ceramics.utils.Utils;
 
 /**
@@ -47,7 +45,7 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
     private TextView tvSize,tvColor,tvType;
     private ProductListGridAdapater productListGridAdapater;
     private ArrayList<ProductDetails> productList;
-    private ArrayAdapter<String> sizeAdapter;
+    private ArrayAdapter<String> sizeAdapter,colorApdater,typeAdapter;
     private ListPopupWindow lpwSize,lpwColor,lpwType;
     private ArrayList<Filter> sizeList,colorList,typeList;
 
@@ -79,6 +77,10 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
         tvType = (TextView)view.findViewById(R.id.filter_type);
         Bundle bundle = getArguments();
         productList = (ArrayList<ProductDetails>) bundle.getSerializable("ProductList");
+        filterProduct();
+    }
+
+    private void setAdapter(ArrayList<ProductDetails> productList){
         productListGridAdapater = new ProductListGridAdapater(activity,productList);
         gvProductList.setAdapter(productListGridAdapater);
     }
@@ -114,19 +116,19 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
         for (int i = 0; i < filterList.size(); i++){
             switch (filterList.get(i).get(0).getFilterCategoryId()){
                 case AppConstants.COLOR:
-                    colorFilter(filterList.get(i));
+                    initColorFilter(filterList.get(i));
                     break;
                 case AppConstants.SIZE:
-                    sizeFilter(filterList.get(i));
+                    initSizeFilter(filterList.get(i));
                     break;
                 case AppConstants.FINISHING_TYPE:
-                    typeFilter(filterList.get(i));
+                    initTypeFilter(filterList.get(i));
                     break;
             }
         }
     }
 
-    private void sizeFilter(ArrayList<Filter> sizeFilter){
+    private void initSizeFilter(ArrayList<Filter> sizeFilter){
         sizeList = sizeFilter;
         sizeAdapter = new ArrayAdapter<String>(activity,R.layout.row_dropdown_list,getList(sizeFilter));
         lpwSize = new ListPopupWindow(activity);
@@ -135,28 +137,73 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
         lpwSize.setModal(true);
         lpwSize.setPromptPosition(ListPopupWindow.POSITION_PROMPT_BELOW);
         tvSize.setOnClickListener(this);
+        lpwSize.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!"All".equalsIgnoreCase(sizeAdapter.getItem(position)))
+                    tvSize.setText(sizeAdapter.getItem(position));
+                else
+                    tvSize.setText("Size");
+
+                lpwSize.dismiss();
+                filterProduct();
+            }
+        });
     }
 
-    private void colorFilter(ArrayList<Filter> colorFilter){
+    private void initColorFilter(ArrayList<Filter> colorFilter){
         colorList = colorFilter;
-        sizeAdapter = new ArrayAdapter<String>(activity,R.layout.row_dropdown_list,getList(colorFilter));
+        colorApdater = new ArrayAdapter<String>(activity,R.layout.row_dropdown_list,getList(colorFilter));
         lpwColor = new ListPopupWindow(activity);
-        lpwColor.setAdapter(sizeAdapter);
+        lpwColor.setAdapter(colorApdater);
         lpwColor.setAnchorView(tvColor);
         lpwColor.setModal(true);
         lpwColor.setPromptPosition(ListPopupWindow.POSITION_PROMPT_BELOW);
         tvColor.setOnClickListener(this);
+        lpwColor.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!"All".equalsIgnoreCase(colorApdater.getItem(position)))
+                    tvColor.setText(colorApdater.getItem(position));
+                else
+                    tvColor.setText("Color");
+
+                lpwColor.dismiss();
+                filterProduct();
+            }
+        });
     }
 
-    private void typeFilter(ArrayList<Filter> typeFilter){
+    private void initTypeFilter(ArrayList<Filter> typeFilter){
         typeList = typeFilter;
-        sizeAdapter = new ArrayAdapter<String>(activity,R.layout.row_dropdown_list,getList(typeFilter));
+        typeAdapter = new ArrayAdapter<String>(activity,R.layout.row_dropdown_list,getList(typeFilter));
         lpwType = new ListPopupWindow(activity);
-        lpwType.setAdapter(sizeAdapter);
+        lpwType.setAdapter(typeAdapter);
         lpwType.setAnchorView(tvType);
         lpwType.setModal(true);
         lpwType.setPromptPosition(ListPopupWindow.POSITION_PROMPT_BELOW);
         tvType.setOnClickListener(this);
+        lpwType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!"All".equalsIgnoreCase(typeAdapter.getItem(position)))
+                    tvType.setText(typeAdapter.getItem(position));
+                else
+                    tvType.setText("Type");
+
+                lpwType.dismiss();
+                filterProduct();
+            }
+        });
+    }
+
+    private void filterProduct(){
+        SizeCriteria sizeCriteria = new SizeCriteria(tvSize.getText().toString());
+        ColorCriteria colorCriteria = new ColorCriteria(tvColor.getText().toString());
+        FinishingTypeCriteria typeCriteria = new FinishingTypeCriteria(tvType.getText().toString());
+        AndCriteria searchProduct = new AndCriteria(sizeCriteria,colorCriteria,typeCriteria);
+        ArrayList<ProductDetails> filteredList = searchProduct.meetCriteria(productList);
+        setAdapter(filteredList);
     }
 
     private ArrayList<String> getList(ArrayList<Filter> filters){
@@ -164,7 +211,7 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
         for (Filter filter : filters){
             list.add(filter.getFilterName());
         }
-
+        list.add("All");
         return list;
     }
 
