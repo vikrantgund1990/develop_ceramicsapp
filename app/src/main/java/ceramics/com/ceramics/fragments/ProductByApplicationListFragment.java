@@ -42,7 +42,7 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
 
     private BaseActivity activity;
     private GridView gvProductList;
-    private TextView tvSize,tvColor,tvType;
+    private TextView tvSize,tvColor,tvType,tvApplication;
     private ProductListGridAdapater productListGridAdapater;
     private ArrayList<ProductDetails> productList;
     private ArrayAdapter<String> sizeAdapter,colorApdater,typeAdapter;
@@ -76,9 +76,19 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
         tvSize = (TextView)view.findViewById(R.id.filter_size);
         tvColor = (TextView)view.findViewById(R.id.filter_color);
         tvType = (TextView)view.findViewById(R.id.filter_type);
+        tvApplication = (TextView)view.findViewById(R.id.text_application);
+
         Bundle bundle = getArguments();
         productList = (ArrayList<ProductDetails>) bundle.getSerializable("ProductList");
         title = bundle.getString("Title");
+
+        if (bundle.getBoolean("isFromApplication")){
+            tvApplication.setVisibility(View.GONE);
+        }
+        else {
+            tvApplication.setVisibility(View.VISIBLE);
+        }
+
         filterProduct();
     }
 

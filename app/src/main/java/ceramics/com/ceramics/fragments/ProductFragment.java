@@ -101,6 +101,7 @@ public class ProductFragment extends BaseFragment implements View.OnClickListene
         Bundle bundle = new Bundle();
         bundle.putSerializable("ProductList",list);
         bundle.putString("Title",title);
+        bundle.putBoolean("isFromApplication",false);
         fragment.setArguments(bundle);
         activity.loadFragment(fragment,R.id.base_layout,true);
     }
