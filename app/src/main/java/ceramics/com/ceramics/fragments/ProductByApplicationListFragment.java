@@ -48,6 +48,7 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
     private ArrayAdapter<String> sizeAdapter,colorApdater,typeAdapter;
     private ListPopupWindow lpwSize,lpwColor,lpwType;
     private ArrayList<Filter> sizeList,colorList,typeList;
+    private String title;
 
     @Nullable
     @Override
@@ -66,7 +67,7 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
     @Override
     public void onResume() {
         super.onResume();
-        activity.setActionBarTitle("Product by Application");
+        activity.setActionBarTitle(title);
         activity.showBackOption(true);
     }
 
@@ -77,12 +78,28 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
         tvType = (TextView)view.findViewById(R.id.filter_type);
         Bundle bundle = getArguments();
         productList = (ArrayList<ProductDetails>) bundle.getSerializable("ProductList");
+        title = bundle.getString("Title");
         filterProduct();
     }
 
     private void setAdapter(ArrayList<ProductDetails> productList){
         productListGridAdapater = new ProductListGridAdapater(activity,productList);
         gvProductList.setAdapter(productListGridAdapater);
+
+        gvProductList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                openProductDetailsFragment(productListGridAdapater.getItem(position));
+            }
+        });
+    }
+
+    private void openProductDetailsFragment(ProductDetails productDetails){
+        ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(AppConstants.PRODUCT_DETAILS,productDetails);
+        productDetailsFragment.setArguments(bundle);
+        activity.loadFragment(productDetailsFragment,R.id.base_layout,true);
     }
 
     @Override

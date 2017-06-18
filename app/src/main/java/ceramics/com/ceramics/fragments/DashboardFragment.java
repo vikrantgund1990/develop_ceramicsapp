@@ -83,6 +83,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
     private final int BEDROOM = 1,LIVING_ROOM = 2,KITCHEN = 3,BATHROOM = 4,OFFICE = 5,OUTDOOR = 6;
     private final int LOCATION_REQUEST = 1100,GPS_REQUEST = 1000;
     private int selectedApplication = 0;
+    private String title;
 
     @Nullable
     @Override
@@ -256,21 +257,27 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
             GetProductListDataHelper dataHelper = new GetProductListDataHelper(this);
             switch (product){
                 case BEDROOM:
+                    title = "Bedroom";
                     APIRequestHelper.bedroom(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
                     break;
                 case LIVING_ROOM:
+                    title = "Living Room";
                     APIRequestHelper.livingroom(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
                     break;
                 case KITCHEN:
+                    title = "Kitchen";
                     APIRequestHelper.kitchen(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
                     break;
                 case BATHROOM:
+                    title = "Bathroom";
                     APIRequestHelper.bathroom(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
                     break;
                 case OFFICE:
+                    title = "Office";
                     APIRequestHelper.office(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
                     break;
                 case OUTDOOR:
+                    title = "Outdoor";
                     APIRequestHelper.outdoor(responseModelType, new JSONObject(), dataHelper, dataHelper, activity);
                     break;
             }
@@ -295,6 +302,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
         ProductByApplicationListFragment fragment = new ProductByApplicationListFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("ProductList",list);
+        bundle.putString("Title",title);
         fragment.setArguments(bundle);
         activity.loadFragment(fragment,R.id.base_layout,true);
     }
