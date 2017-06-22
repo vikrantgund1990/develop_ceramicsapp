@@ -1,10 +1,13 @@
 package ceramics.com.ceramics.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import ceramics.com.ceramics.R;
@@ -42,5 +45,6 @@ public abstract class BaseActivity extends FragmentActivity {
         intent.putExtra("URL",getString(R.string.tile_visualiser));
         startActivity(intent);
     }
+
 }
 

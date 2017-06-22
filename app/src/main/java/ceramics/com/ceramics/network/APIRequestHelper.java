@@ -180,6 +180,11 @@ public class APIRequestHelper {
 		userGetRequest("/filters", clazz, queryParams, listener, errorListener, activity);
 	}
 
+	public static <T> void addPromocode(String url,Type clazz, JSONObject queryParams, Listener<T> listener,
+									 ErrorListener errorListener, Activity activity) {
+		userGetRequest("/promocode/add/"+url, clazz, queryParams, listener, errorListener, activity);
+	}
+
 	public static <T> void subscribeGoal(Type clazz, JSONObject queryParams, Listener<T> listener,
 										 ErrorListener errorListener, Activity activity) {
 		userPutRequest("/account/goals/subscribe", clazz, queryParams, listener, errorListener, activity);

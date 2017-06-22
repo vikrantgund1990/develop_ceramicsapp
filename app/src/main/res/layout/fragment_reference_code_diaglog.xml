@@ -15,7 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/AppEditText"
-            android:hint="Enter your reference code"
+            android:maxLines="1"
+            android:inputType="textNoSuggestions"
+            android:maxLength="15"
+            android:hint="Enter your promotional code"
             />
         <LinearLayout
             android:layout_width="match_parent"
