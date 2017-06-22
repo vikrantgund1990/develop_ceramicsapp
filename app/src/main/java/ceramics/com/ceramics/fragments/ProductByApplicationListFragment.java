@@ -45,8 +45,8 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
     private TextView tvSize,tvColor,tvType,tvApplication;
     private ProductListGridAdapater productListGridAdapater;
     private ArrayList<ProductDetails> productList;
-    private ArrayAdapter<String> sizeAdapter,colorApdater,typeAdapter;
-    private ListPopupWindow lpwSize,lpwColor,lpwType;
+    private ArrayAdapter<String> sizeAdapter,colorApdater,typeAdapter,applicationAdapter;
+    private ListPopupWindow lpwSize,lpwColor,lpwType,lpwApplication;
     private ArrayList<Filter> sizeList,colorList,typeList;
     private String title;
 
@@ -125,6 +125,9 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
                 case R.id.filter_type:
                     lpwType.show();
                     break;
+                case R.id.text_application:
+                    lpwApplication.show();
+                    break;
             }
         }
         else {
@@ -151,12 +154,14 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
                 case AppConstants.FINISHING_TYPE:
                     initTypeFilter(filterList.get(i));
                     break;
+                case AppConstants.APPLICATION:
+                    initApplicationFilter(filterList.get(i));
+                    break;
             }
         }
     }
 
     private void initSizeFilter(ArrayList<Filter> sizeFilter){
-        sizeList = sizeFilter;
         sizeAdapter = new ArrayAdapter<String>(activity,R.layout.row_dropdown_list,getList(sizeFilter));
         lpwSize = new ListPopupWindow(activity);
         lpwSize.setAdapter(sizeAdapter);
@@ -179,7 +184,6 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
     }
 
     private void initColorFilter(ArrayList<Filter> colorFilter){
-        colorList = colorFilter;
         colorApdater = new ArrayAdapter<String>(activity,R.layout.row_dropdown_list,getList(colorFilter));
         lpwColor = new ListPopupWindow(activity);
         lpwColor.setAdapter(colorApdater);
@@ -202,7 +206,6 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
     }
 
     private void initTypeFilter(ArrayList<Filter> typeFilter){
-        typeList = typeFilter;
         typeAdapter = new ArrayAdapter<String>(activity,R.layout.row_dropdown_list,getList(typeFilter));
         lpwType = new ListPopupWindow(activity);
         lpwType.setAdapter(typeAdapter);
@@ -219,6 +222,28 @@ public class ProductByApplicationListFragment extends BaseFragment implements Vi
                     tvType.setText("Type");
 
                 lpwType.dismiss();
+                filterProduct();
+            }
+        });
+    }
+
+    private void initApplicationFilter(ArrayList<Filter> typeFilter){
+        applicationAdapter = new ArrayAdapter<String>(activity,R.layout.row_dropdown_list,getList(typeFilter));
+        lpwApplication = new ListPopupWindow(activity);
+        lpwApplication.setAdapter(applicationAdapter);
+        lpwApplication.setAnchorView(tvApplication);
+        lpwApplication.setModal(true);
+        lpwApplication.setPromptPosition(ListPopupWindow.POSITION_PROMPT_BELOW);
+        tvApplication.setOnClickListener(this);
+        lpwApplication.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!"All".equalsIgnoreCase(applicationAdapter.getItem(position)))
+                    tvApplication.setText(applicationAdapter.getItem(position));
+                else
+                    tvApplication.setText("Application");
+
+                lpwApplication.dismiss();
                 filterProduct();
             }
         });
