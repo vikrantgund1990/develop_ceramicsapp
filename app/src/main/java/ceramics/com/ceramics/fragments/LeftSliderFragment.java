@@ -31,7 +31,7 @@ public class LeftSliderFragment extends BaseFragment implements View.OnClickList
     }
 
     private void initView(View view){
-        tvHome = (TextView)view.findViewById(R.id.home);
+        //tvHome = (TextView)view.findViewById(R.id.home);
         tvProduct = (TextView)view.findViewById(R.id.products);
         tvRefer = (TextView)view.findViewById(R.id.refer_user);
         tvVisualiser = (TextView)view.findViewById(R.id.tile_visualiser);
@@ -42,7 +42,6 @@ public class LeftSliderFragment extends BaseFragment implements View.OnClickList
         tvContactUs.setOnClickListener(this);
         tvAboutUs.setOnClickListener(this);
         tvProduct.setOnClickListener(this);
-        tvHome.setOnClickListener(this);
         tvRefer.setOnClickListener(this);
     }
 

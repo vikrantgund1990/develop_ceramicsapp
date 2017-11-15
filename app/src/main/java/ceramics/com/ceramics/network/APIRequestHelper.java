@@ -24,8 +24,8 @@ import ceramics.com.ceramics.utils.Utils;
  */
 public class APIRequestHelper {
 
-	/*public static final String BASE_URL = "http://qa.ceramicskart.com/api";*/
-	public static final String BASE_URL = "http://dev.ceramicskart.com/api";
+	public static final String BASE_URL = "http://ceramicskart.com/api";
+	//public static final String BASE_URL = "http://dev.ceramicskart.com/api";
 
 	public static String requestType;
 	public static Type clazz;
@@ -185,18 +185,4 @@ public class APIRequestHelper {
 		userGetRequest("/promocode/add/"+url, clazz, queryParams, listener, errorListener, activity);
 	}
 
-	public static <T> void subscribeGoal(Type clazz, JSONObject queryParams, Listener<T> listener,
-										 ErrorListener errorListener, Activity activity) {
-		userPutRequest("/account/goals/subscribe", clazz, queryParams, listener, errorListener, activity);
-	}
-
-	public static <T> void unSubscribeGoal(Type clazz, JSONObject queryParams, Listener<T> listener,
-										   ErrorListener errorListener, Activity activity) {
-		userPutRequest("/account/goals/unSubscribe", clazz, queryParams, listener, errorListener, activity);
-	}
-
-	public static <T> void achieveGoal(Type clazz, JSONObject queryParams, Listener<T> listener,
-									   ErrorListener errorListener, Activity activity) {
-		userPutRequest("/account/goals/achieve", clazz, queryParams, listener, errorListener, activity);
-	}
 }

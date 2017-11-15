@@ -21,6 +21,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/text_color"
                 android:textStyle="bold"
+                android:visibility="gone"
                 />
             <View
                 android:layout_width="match_parent"
@@ -66,11 +67,13 @@
                 android:textSize="16sp"
                 android:textColor="@color/text_color"
                 android:textStyle="bold"
+                android:visibility="gone"
                 />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dip"
                 android:background="@color/gray"
+                android:visibility="gone"
                 />
             <TextView
                 android:id="@+id/list_product"
@@ -81,11 +84,13 @@
                 android:textSize="16sp"
                 android:textColor="@color/text_color"
                 android:textStyle="bold"
+                android:visibility="gone"
                 />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dip"
                 android:background="@color/gray"
+                android:visibility="gone"
                 />
             <TextView
                 android:id="@+id/contact_us"

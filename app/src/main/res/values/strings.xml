@@ -14,8 +14,8 @@
     <string name="product_not_available">Sorry! Products not found.</string>
     <string name="error">Sorry! Unable to process your request. Please try again later.</string>
 
-    <string name="tile_visualiser">"http://tilevisualizer.ceramicskart.com"</string>
-    <string name="about_us">http://images.ceramicskart.com/img/3001.jpg</string>
-    <string name="contact_us">"https://WWW.google.com"</string>
+    <string name="tile_visualiser">"http://3dvisualizer.ceramicskart.com/room3d/1"</string>
+    <string name="about_us">"https://WWW.ceramicskart.com/About"</string>
+    <string name="contact_us">"https://WWW.ceramicskart.com/Disclaimer"</string>
 
 </resources>
