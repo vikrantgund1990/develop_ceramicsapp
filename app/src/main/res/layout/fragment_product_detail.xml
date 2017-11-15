@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_image"
+            android:layout_above="@+id/purchase_button"
             android:padding="15dp"
             >
 
@@ -89,7 +90,110 @@
                         android:textColor="@color/text_color"
                         android:textSize="16sp" />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/product_list"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Finishing Type"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/finishing"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Product"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/product_list"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Material Type"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/material"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Product"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/product_list"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Coverage(sq.ft.)"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/coverage"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Product"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/product_list"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Quantity per box"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/quantity"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/ten_dp"
+                        android:text="Product"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp" />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,6 +220,21 @@
                         android:textColor="@color/text_color"
                         android:textSize="16sp" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_calculator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tile Calculator"
+                    android:layout_margin="15dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_color"
+                    android:gravity="center"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:background="@drawable/rounded_edittext"
+                    />
+
             </LinearLayout>
         </ScrollView>
         <Button

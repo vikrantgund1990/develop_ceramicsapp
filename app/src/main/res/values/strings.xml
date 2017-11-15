@@ -15,7 +15,8 @@
     <string name="error">Sorry! Unable to process your request. Please try again later.</string>
 
     <string name="tile_visualiser">"http://3dvisualizer.ceramicskart.com/room3d/1"</string>
-    <string name="about_us">"https://WWW.ceramicskart.com/About"</string>
-    <string name="contact_us">"https://WWW.ceramicskart.com/Disclaimer"</string>
+    <string name="about_us">"http://WWW.ceramicskart.com/About#/"</string>
+    <string name="contact_us">"http://WWW.ceramicskart.com/Disclaimer#/"</string>
+    <string name="privacy_policy">"http://WWW.ceramicskart.com/privacypolicy#/"</string>
 
 </resources>

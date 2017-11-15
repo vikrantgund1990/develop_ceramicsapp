@@ -20,7 +20,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Tile Calculator"
+                android:text="Disclaimer"
                 android:layout_marginRight="2dp"
                 android:textStyle="bold"
                 android:textColor="@color/text_color"
@@ -67,11 +67,11 @@
                 android:background="@drawable/rounded_edittext"
                 />
             <TextView
-                android:id="@+id/text_events"
+                android:id="@+id/text_privacy"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Events"
+                android:text="Privacy Policy"
                 android:layout_marginLeft="2dp"
                 android:textStyle="bold"
                 android:textColor="@color/text_color"

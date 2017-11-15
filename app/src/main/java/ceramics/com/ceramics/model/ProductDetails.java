@@ -47,6 +47,15 @@ public class ProductDetails implements Serializable {
     private String updatedOn;
     private String manufacturer;
     private ProductColor productColour;
+    private int qtyPerBox;
+
+    public int getQtyPerBox() {
+        return qtyPerBox;
+    }
+
+    public void setQtyPerBox(int qtyPerBox) {
+        this.qtyPerBox = qtyPerBox;
+    }
 
     public String getFinishType() {
         return finishType;

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -19,9 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
@@ -48,7 +45,6 @@ import ceramics.com.ceramics.R;
 import ceramics.com.ceramics.activity.BaseActivity;
 import ceramics.com.ceramics.activity.HomeActivity;
 import ceramics.com.ceramics.activity.IGPSListner;
-import ceramics.com.ceramics.activity.TileVisualizerActivity;
 import ceramics.com.ceramics.adapter.ImageListAdapter;
 import ceramics.com.ceramics.helper.GetProductListDataHelper;
 import ceramics.com.ceramics.helper.ProductListDataListner;
@@ -75,7 +71,7 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private ProgressDialog progressDialog;
-    private TextView tvTileVisualiser,tvTileCalculator,tvContactUs,tvAboutUs,tvEvents;
+    private TextView tvTileVisualiser,tvTileCalculator,tvContactUs,tvAboutUs, tvPrivacy;
     private Fragment wallFragment,floorFragment,productByApplication;
     private TextView tvWall,tvFloor;
     private String imgageBaseURL = "http://images.ceramicskart.com/img/home/";
@@ -119,13 +115,13 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
         tvTileCalculator = (TextView)footer.findViewById(R.id.text_calculator);
         tvContactUs = (TextView)footer.findViewById(R.id.text_contact_us);
         tvAboutUs = (TextView)footer.findViewById(R.id.text_about_us);
-        tvEvents = (TextView)footer.findViewById(R.id.text_events);
+        tvPrivacy = (TextView)footer.findViewById(R.id.text_privacy);
 
         tvTileVisualiser.setOnClickListener(this);
         tvTileCalculator.setOnClickListener(this);
         tvContactUs.setOnClickListener(this);
         tvAboutUs.setOnClickListener(this);
-        tvEvents.setOnClickListener(this);
+        tvPrivacy.setOnClickListener(this);
 
         addItems();
         imageListAdapter = new ImageListAdapter(activity,productImageList);
@@ -231,16 +227,17 @@ public class DashboardFragment extends BaseFragment implements View.OnClickListe
                 activity.openTileVisualizer();
                 break;
             case R.id.text_calculator:
-                openTileCalculator();
+                (activity).openWebFragment(getString(R.string.contact_us));
+                //openTileCalculator();
                 break;
             case R.id.text_contact_us:
-                (activity).openWebFragment(getString(R.string.contact_us));
+                (activity).openWebFragment(getString(R.string.about_us));
                 break;
             case R.id.text_about_us:
                 (activity).openWebFragment(getString(R.string.about_us));
                 break;
-            case R.id.text_events:
-
+            case R.id.text_privacy:
+                (activity).openWebFragment(getString(R.string.privacy_policy));
                 break;
         }
     }

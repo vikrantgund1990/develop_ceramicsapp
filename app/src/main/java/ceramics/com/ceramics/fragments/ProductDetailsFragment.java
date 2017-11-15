@@ -23,11 +23,13 @@ import ceramics.com.ceramics.utils.CeramicsApplication;
 public class ProductDetailsFragment extends BaseFragment implements View.OnClickListener{
 
     private BaseActivity activity;
-    private TextView tvProduct,tvSize,tvCost;
+    private TextView tvProduct,tvSize,tvCost,tvFinishing,tvMaterial,tvCoverage,tvCalculator,
+                     tvQuantity;
     private NetworkImageView ivProductImage;
     private String imgageBaseURL = "http://images.ceramicskart.com/img/";
     private ImageLoader imageLoader;
     private ProductDetails productDetails;
+    private double coverage;
 
     @Nullable
     @Override
@@ -46,18 +48,30 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
         tvProduct = (TextView)view.findViewById(R.id.product);
         tvSize = (TextView)view.findViewById(R.id.size);
         tvCost = (TextView)view.findViewById(R.id.cost);
+        tvFinishing = (TextView)view.findViewById(R.id.finishing);
+        tvMaterial = (TextView)view.findViewById(R.id.material);
+        tvCoverage = (TextView)view.findViewById(R.id.coverage);
         ivProductImage = (NetworkImageView)view.findViewById(R.id.product_image);
         ivProductImage.setDefaultImageResId(R.mipmap.merchandise_stub_image);
+        tvCalculator = (TextView)view.findViewById(R.id.text_calculator);
+        tvQuantity = (TextView)view.findViewById(R.id.quantity);
 
         ivProductImage.setOnClickListener(this);
+        tvCalculator.setOnClickListener(this);
 
         imageLoader = CeramicsApplication.getInstance().getImageLoader();
         productDetails = (ProductDetails) getArguments().getSerializable(AppConstants.PRODUCT_DETAILS);
         if (productDetails != null){
             ivProductImage.setImageUrl(imgageBaseURL+productDetails.getManufacturerProductId()+".jpg",imageLoader);
             tvProduct.setText(productDetails.getManufacturerProductId());
-            tvSize.setText(productDetails.getWidthInCM()+" Cm");
+            tvSize.setText(productDetails.getWidthInMM()+" X "+productDetails.getLengthInMM());
             tvCost.setText(productDetails.getCost()+" INR");
+            tvFinishing.setText(productDetails.getFinishType());
+            tvMaterial.setText(productDetails.getLineOfBusiness());
+            tvQuantity.setText(productDetails.getQtyPerBox()+"");
+            double area = productDetails.getWidthInFT()*productDetails.getLengthInFT();
+            coverage = area * productDetails.getQtyPerBox();
+            tvCoverage.setText(area+"");
         }
     }
 
@@ -67,7 +81,18 @@ public class ProductDetailsFragment extends BaseFragment implements View.OnClick
             case R.id.product_image:
                 openImageDialog();
                 break;
+            case R.id.text_calculator:
+                openTileCalculator();
+                break;
         }
+    }
+
+    private void openTileCalculator(){
+        TileCalculatorFragment tileCalculatorFragment = new TileCalculatorFragment();
+        Bundle bundle = new Bundle();
+        bundle.putDouble("Coverage",coverage);
+        tileCalculatorFragment.setArguments(bundle);
+        tileCalculatorFragment.show(getFragmentManager(),"");
     }
 
     private void openImageDialog(){
