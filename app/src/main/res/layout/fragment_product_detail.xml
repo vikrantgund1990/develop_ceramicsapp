@@ -245,6 +245,15 @@
             android:text="Where to Buy?"
             style="@style/NormalButton"
             />
+            <ListView
+                android:id="@+id/retailer_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:visibility="invisible"
+                android:layout_above="@+id/purchase_button"
+                ></ListView>
+
     </RelativeLayout>
 
    <!-- <fragment

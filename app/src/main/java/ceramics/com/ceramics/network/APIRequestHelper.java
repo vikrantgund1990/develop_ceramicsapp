@@ -185,4 +185,8 @@ public class APIRequestHelper {
 		userGetRequest("/promocode/add/"+url, clazz, queryParams, listener, errorListener, activity);
 	}
 
+	public static <T> void retailers(String url,Type clazz, JSONObject queryParams, Listener<T> listener,
+										ErrorListener errorListener, Activity activity) {
+		userGetRequest("/retailer/"+url, clazz, queryParams, listener, errorListener, activity);
+	}
 }
